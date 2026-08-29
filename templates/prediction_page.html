@@ -20,15 +20,15 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict" class="active-link">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
-        <span class="badge-tag">PAC Engine: 96% Acc</span>
+        <a href="/">Home</a>
+        <a href="/predict" class="active-link">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
+        <span class="badge-tag">AI Engine: 96% Acc</span>
       </nav>
     </div>
   </header>
@@ -37,17 +37,17 @@
   <main class="studio-main">
     <div class="studio-container">
       <div class="studio-header">
-        <span class="section-badge">Interactive Inference Studio</span>
-        <h1 class="studio-title">Analyze Article &amp; Source Credibility</h1>
-        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Submit article content below or choose a sample to test the Passive Aggressive Classifier in real-time.</p>
+        <span class="section-badge">Instant News Fact-Checker</span>
+        <h1 class="studio-title">Check a News Article (Real or Fake?)</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Paste any headline and article text below, or pick a sample to verify its truthfulness in under 2 milliseconds.</p>
       </div>
 
       <!-- Quick Preset Samples -->
       <div class="sample-preset-row">
-        <span class="preset-label">Quick Samples:</span>
+        <span class="preset-label">Try an Example:</span>
         <button type="button" class="preset-btn" onclick="loadSample('nasa')">🚀 Real: NASA Discovery</button>
-        <button type="button" class="preset-btn" onclick="loadSample('miracle')">⚠️ Fake: Secret Miracle Herb</button>
-        <button type="button" class="preset-btn" onclick="loadSample('alien')">🛸 Fake: Hollow Moon Outpost</button>
+        <button type="button" class="preset-btn" onclick="loadSample('miracle')">⚠️ Fake: Miracle Herb Hoax</button>
+        <button type="button" class="preset-btn" onclick="loadSample('alien')">🛸 Fake: Moon Base Myth</button>
       </div>
 
       <div class="studio-grid">
@@ -60,18 +60,18 @@
             </div>
 
             <div class="form-group">
-              <label for="author">Author or News Publisher / Source</label>
+              <label for="author">Author or News Publisher</label>
               <input type="text" id="author" name="author" placeholder="e.g. Nature Science Journal or Reuters...">
             </div>
 
             <div class="form-group">
-              <label for="text">Article Content / Body</label>
+              <label for="text">Full News Story / Article Body</label>
               <textarea id="text" name="text" rows="7" placeholder="Paste the news story text here..." required></textarea>
             </div>
 
             <div class="form-actions">
               <button type="submit" class="btn btn-primary btn-block">
-                <span>Analyze with Passive Aggressive Classifier</span>
+                <span>Check This Article Now ⚡</span>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
               </button>
             </div>
@@ -81,8 +81,8 @@
         <!-- Result Column -->
         <div class="studio-card result-card">
           <div class="result-header">
-            <h3>Model Classification Verdict</h3>
-            <span class="model-badge">PAC Online Model</span>
+            <h3>Fact-Check Verdict</h3>
+            <span class="model-badge">AI Checker · 96% Acc</span>
           </div>
 
           {% if result %}
@@ -91,16 +91,16 @@
                 {% if result.is_fake %}🚨{% else %}✅{% endif %}
               </div>
               <div class="verdict-info">
-                <span class="verdict-tag">{% if result.is_fake %}UNRELIABLE / FAKE{% else %}RELIABLE / AUTHENTIC{% endif %}</span>
+                <span class="verdict-tag">{% if result.is_fake %}FAKE / UNRELIABLE{% else %}REAL / AUTHENTIC{% endif %}</span>
                 <h4 class="verdict-title">{{ result.prediction }}</h4>
-                <p class="verdict-source">Source Analyzed: <strong>{{ result.author }}</strong></p>
+                <p class="verdict-source">Publisher / Author: <strong>{{ result.author }}</strong></p>
               </div>
             </div>
 
             <!-- Confidence Bar -->
             <div class="metric-meter-wrap">
               <div class="meter-labels">
-                <span>Model Confidence</span>
+                <span>AI Confidence Score</span>
                 <span class="meter-val">{{ result.confidence }}%</span>
               </div>
               <div class="meter-track">
@@ -111,14 +111,14 @@
             <!-- Source Visibility Weight -->
             <div class="visibility-score-box">
               <div class="vis-header">
-                <span class="vis-label">Social Media Visibility Weight</span>
+                <span class="vis-label">Recommended Social Feed Reach</span>
                 <span class="vis-multiplier">{{ result.visibility_weight }}x</span>
               </div>
               <p class="vis-explanation">
                 {% if result.is_fake %}
-                  ⚠️ <strong>Feed Demotion Active:</strong> High probability of misinformation detected. Recommendation: Dampen source algorithm weight by {{ ((1.0 - result.visibility_weight) * 100)|round }}% in social distribution feeds.
+                  ⚠️ <strong>Viral Reach Throttled:</strong> This article contains hallmarks of fabricated news. Recommendation: Lower post reach by {{ ((1.0 - result.visibility_weight) * 100)|round }}% in user feeds to prevent viral spread.
                 {% else %}
-                  🌟 <strong>Standard / High Visibility:</strong> Content aligns with verified, reputable reporting patterns. No throttling applied.
+                  🌟 <strong>Safe to Share:</strong> Content matches trusted, reputable reporting. Full feed distribution granted.
                 {% endif %}
               </p>
             </div>
@@ -126,13 +126,13 @@
           {% else %}
             <!-- Default Placeholder State -->
             <div class="empty-state">
-              <div class="empty-icon">📊</div>
-              <h4>No Article Analyzed Yet</h4>
-              <p>Type in an article title and content on the left, or click one of the quick samples above to inspect the PAC classification results.</p>
+              <div class="empty-icon">📰</div>
+              <h4>No Article Checked Yet</h4>
+              <p>Enter a headline and story on the left, or choose an example above to see the AI fact-check result.</p>
               
               <div class="benchmark-pills">
-                <span class="pill">Benchmark: 96% Acc</span>
-                <span class="pill">Loss: Hinge</span>
+                <span class="pill">Accuracy: 96%</span>
+                <span class="pill">Speed: Under 2ms</span>
                 <span class="pill">C: 0.5</span>
               </div>
             </div>

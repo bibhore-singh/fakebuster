@@ -20,14 +20,14 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab" class="active-link">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab" class="active-link">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
       </nav>
     </div>
   </header>
@@ -35,20 +35,20 @@
   <main class="studio-main">
     <div class="studio-container full-width">
       <div class="studio-header">
-        <span class="section-badge">Linguistic Tokenization &amp; Lemmatization</span>
-        <h1 class="studio-title">Interactive NLP Preprocessing Pipeline</h1>
-        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Explore how raw news text is sanitized, normalized, stripped of stopwords, and lemmatized through the exact 6-stage NLP pipeline before feature vectorization.</p>
+        <span class="section-badge">Text Analysis Lab</span>
+        <h1 class="studio-title">How AI Reads &amp; Breaks Down News (Step-by-Step)</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Explore how raw text is cleaned, stripped of filler words, and converted into root words before the AI makes its decision.</p>
       </div>
 
       <!-- Presets & Custom Input Bar -->
       <div class="nlp-input-card">
         <div class="nlp-input-header">
-          <label for="nlpTextInput">Input News Text or Select a Pre-Engineered Sample:</label>
+          <label for="nlpTextInput">Type Any Headline or Choose an Example:</label>
           <div class="nlp-preset-pills">
-            <button type="button" class="nlp-pill-btn active" onclick="loadNlpPreset('tabloid')">🚨 Viral Moon Base Conspiracy</button>
-            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('nasa')">✅ NASA James Webb Discovery</button>
-            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('election')">🚨 Rigged Voting Machine Hoax</button>
-            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('climate')">✅ UN Renewable Energy Accord</button>
+            <button type="button" class="nlp-pill-btn active" onclick="loadNlpPreset('tabloid')">🚨 Moon Base Conspiracy</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('nasa')">✅ NASA Telescope Discovery</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('election')">🚨 Voting Machine Hoax</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('climate')">✅ Renewable Energy Accord</button>
           </div>
         </div>
 
@@ -56,23 +56,23 @@
 
         <div class="nlp-stats-bar">
           <div class="nlp-stat-chip">
-            <span>Raw Character Count:</span>
+            <span>Total Characters:</span>
             <strong id="statRawChars">134</strong>
           </div>
           <div class="nlp-stat-chip">
-            <span>Raw Word Tokens:</span>
+            <span>Total Words:</span>
             <strong id="statRawWords">17</strong>
           </div>
           <div class="nlp-stat-chip">
-            <span>Stopwords Eliminated:</span>
+            <span>Filler Words Removed:</span>
             <strong id="statStopwords" class="text-danger">6 (35.3%)</strong>
           </div>
           <div class="nlp-stat-chip">
-            <span>Lemmatized Feature Tokens:</span>
+            <span>Clean Root Words:</span>
             <strong id="statLemmas" class="text-safe">11 Tokens</strong>
           </div>
           <div class="nlp-stat-chip">
-            <span>Vocabulary Reduction:</span>
+            <span>Text Reduced By:</span>
             <strong id="statReduction" class="text-cyan">35.3%</strong>
           </div>
         </div>
@@ -86,10 +86,10 @@
           <div class="stage-header">
             <div class="stage-num">01</div>
             <div class="stage-title-wrap">
-              <h4>Raw Ingested Stream</h4>
-              <span>Unmodified user article string</span>
+              <h4>Step 1: Original Headline / Article</h4>
+              <span>Raw text exactly as entered by the user</span>
             </div>
-            <span class="stage-tag">Stage 1</span>
+            <span class="stage-tag">Step 1</span>
           </div>
           <div class="stage-content-box" id="stage1Box">
             BREAKING: Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns!
@@ -101,10 +101,10 @@
           <div class="stage-header">
             <div class="stage-num">02</div>
             <div class="stage-title-wrap">
-              <h4>Regex Sanitization</h4>
-              <span><code>re.sub(r'[^a-zA-Z\s]', '', text)</code></span>
+              <h4>Step 2: Clean Special Characters</h4>
+              <span>Removes punctuation, emojis, and symbols so only words remain</span>
             </div>
-            <span class="stage-tag">Stage 2</span>
+            <span class="stage-tag">Step 2</span>
           </div>
           <div class="stage-content-box" id="stage2Box">
             BREAKING Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns
@@ -116,10 +116,10 @@
           <div class="stage-header">
             <div class="stage-num">03</div>
             <div class="stage-title-wrap">
-              <h4>Case Folding (Lowercasing)</h4>
-              <span>Unified lexical case sensitivity</span>
+              <h4>Step 3: Convert All to Lowercase</h4>
+              <span>Ensures capitalized words match lowercase words equally</span>
             </div>
-            <span class="stage-tag">Stage 3</span>
+            <span class="stage-tag">Step 3</span>
           </div>
           <div class="stage-content-box" id="stage3Box">
             breaking secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns
@@ -131,10 +131,10 @@
           <div class="stage-header">
             <div class="stage-num">04</div>
             <div class="stage-title-wrap">
-              <h4>NLTK Stopwords Purge</h4>
-              <span>179 high-frequency uninformative words filtered</span>
+              <h4>Step 4: Remove Unnecessary Filler Words (Stopwords)</h4>
+              <span>Filters out words like "the", "that", "and" which carry no fact-checking clue</span>
             </div>
-            <span class="stage-tag danger">Stage 4</span>
+            <span class="stage-tag danger">Step 4</span>
           </div>
           <div class="stage-content-box" id="stage4Box">
             <span class="token keep">breaking</span>
@@ -163,10 +163,10 @@
           <div class="stage-header">
             <div class="stage-num">05</div>
             <div class="stage-title-wrap">
-              <h4>WordNet Lemmatization</h4>
-              <span><code>WordNetLemmatizer().lemmatize(token)</code></span>
+              <h4>Step 5: Convert Words to Root Form (Lemmas)</h4>
+              <span>Turns plurals and verb tenses into basic dictionary root words</span>
             </div>
-            <span class="stage-tag safe">Stage 5</span>
+            <span class="stage-tag safe">Step 5</span>
           </div>
           <div class="stage-content-box" id="stage5Box">
             <span class="lemma-token">breaking → <strong>break</strong></span>
@@ -191,10 +191,10 @@
           <div class="stage-header">
             <div class="stage-num">06</div>
             <div class="stage-title-wrap">
-              <h4>TF-IDF Feature Weights (N-grams)</h4>
-              <span>Sparse matrix coordinates into PAC Classifier</span>
+              <h4>Step 6: Score Word Importance (TF-IDF Weights)</h4>
+              <span>Calculates keyword weights so the AI can spot sensational or authentic wording</span>
             </div>
-            <span class="stage-tag cyan">Stage 6</span>
+            <span class="stage-tag cyan">Step 6</span>
           </div>
           <div class="stage-content-box" id="stage6Box">
             <div class="tfidf-tokens-grid" id="tfidfTokensGrid">

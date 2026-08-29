@@ -20,14 +20,14 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark" class="active-link">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark" class="active-link">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
       </nav>
     </div>
   </header>
@@ -35,31 +35,31 @@
   <main class="studio-main">
     <div class="studio-container full-width">
       <div class="studio-header">
-        <span class="section-badge">Model Evaluation &amp; Empirical Benchmarks</span>
-        <h1 class="studio-title">Machine Learning Algorithm Comparison</h1>
-        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Comparing the Passive-Aggressive Classifier against traditional baselines (MultinomialNB, Logistic Regression, LinearSVC) evaluated on the 20,800-article Kaggle benchmark.</p>
+        <span class="section-badge">Empirical Accuracy Testing</span>
+        <h1 class="studio-title">AI Accuracy &amp; Model Comparison</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Comparing our chosen Passive Aggressive AI against other common algorithms tested on 20,800 real-world news articles.</p>
       </div>
 
       <!-- Champion Algorithm Card -->
       <div class="benchmark-champion-card">
-        <div class="bcc-badge">🏆 Champion Architecture</div>
+        <div class="bcc-badge">🏆 Top Performing AI Model</div>
         <div class="bcc-content">
           <div class="bcc-info">
-            <h2>Passive Aggressive Classifier (PAC)</h2>
-            <p>Selected for production deployment due to its <strong>online margin-updating hinge-loss function</strong>. Unlike batch-only estimators, PAC processes continuous streaming news articles without full retraining, achieving <strong>96.08% Accuracy</strong> and sub-2ms inference latency.</p>
+            <h2>Passive Aggressive Classifier (Our Production Model)</h2>
+            <p>Chosen because it updates its knowledge on the fly when new slang or fake news phrases appear. It achieves <strong>96.08% Accuracy</strong> with an ultra-fast response time of just <strong>1.4 milliseconds</strong>.</p>
           </div>
           <div class="bcc-stats">
             <div class="bcc-stat">
               <span class="stat-num text-gradient-cyan">96.08%</span>
-              <span class="stat-lbl">Evaluation Accuracy</span>
+              <span class="stat-lbl">Overall Accuracy</span>
             </div>
             <div class="bcc-stat">
               <span class="stat-num text-gradient-pink">0.9601</span>
-              <span class="stat-lbl">Harmonic F1-Score</span>
+              <span class="stat-lbl">Balanced Score</span>
             </div>
             <div class="bcc-stat">
               <span class="stat-num text-gradient-green">1.4 ms</span>
-              <span class="stat-lbl">Inference Latency</span>
+              <span class="stat-lbl">Speed per Story</span>
             </div>
           </div>
         </div>
@@ -69,35 +69,35 @@
       <div class="benchmark-grid">
         <!-- Left: Model Selector & Comparison Table -->
         <div class="benchmark-table-card">
-          <h3 class="card-subtitle">Empirical Comparison on Kaggle Test Set</h3>
+          <h3 class="card-subtitle">Side-by-Side Comparison: 4 AI Models (Click to Inspect)</h3>
           <div class="table-responsive">
             <table class="benchmark-table">
               <thead>
                 <tr>
-                  <th>Model Architecture</th>
+                  <th>AI Model</th>
                   <th>Accuracy</th>
                   <th>Precision</th>
                   <th>Recall</th>
-                  <th>F1-Score</th>
-                  <th>Action</th>
+                  <th>Balanced Score</th>
+                  <th>Inspect</th>
                 </tr>
               </thead>
               <tbody>
                 <tr class="model-row active" id="row-pac" onclick="selectBenchmarkModel('pac')">
                   <td>
                     <strong>Passive Aggressive (PAC)</strong>
-                    <span class="mini-tag champ">Deployed</span>
+                    <span class="mini-tag champ">Deployed in FAKEBUSTER</span>
                   </td>
                   <td class="stat-green">96.08%</td>
                   <td>95.92%</td>
                   <td>96.10%</td>
                   <td>0.9601</td>
-                  <td><button class="btn btn-sm btn-primary">Selected</button></td>
+                  <td><button class="btn btn-sm btn-primary">Active</button></td>
                 </tr>
                 <tr class="model-row" id="row-linearsvc" onclick="selectBenchmarkModel('linearsvc')">
                   <td>
-                    <strong>Linear SVC</strong>
-                    <span class="mini-tag">Margin Baseline</span>
+                    <strong>Linear Support Vector (SVC)</strong>
+                    <span class="mini-tag">Traditional Classifier</span>
                   </td>
                   <td>94.12%</td>
                   <td>93.80%</td>
@@ -107,8 +107,8 @@
                 </tr>
                 <tr class="model-row" id="row-logreg" onclick="selectBenchmarkModel('logreg')">
                   <td>
-                    <strong>Logistic Regression (L2)</strong>
-                    <span class="mini-tag">Linear Baseline</span>
+                    <strong>Logistic Regression</strong>
+                    <span class="mini-tag">Standard Baseline</span>
                   </td>
                   <td>91.50%</td>
                   <td>91.10%</td>
@@ -118,8 +118,8 @@
                 </tr>
                 <tr class="model-row" id="row-mnb" onclick="selectBenchmarkModel('mnb')">
                   <td>
-                    <strong>Multinomial Naive Bayes</strong>
-                    <span class="mini-tag">Probabilistic</span>
+                    <strong>Naive Bayes (MNB)</strong>
+                    <span class="mini-tag">Simple Word Matcher</span>
                   </td>
                   <td>88.42%</td>
                   <td>88.90%</td>
@@ -133,57 +133,57 @@
 
           <!-- Dataset Characteristics -->
           <div class="dataset-stats-box">
-            <h4>📊 Kaggle 20,800-Dataset Distribution &amp; Preprocessing</h4>
+            <h4>📊 Testing Dataset: 20,800 Real News Articles</h4>
             <div class="ds-metrics-row">
               <div class="dsm-item">
-                <span>Total Samples:</span>
+                <span>Total Stories:</span>
                 <strong>20,800 Articles</strong>
               </div>
               <div class="dsm-item">
-                <span>Nulls Dropped:</span>
-                <strong>39 Incomplete (0.18%)</strong>
+                <span>Blank Rows Removed:</span>
+                <strong>39 (0.18%)</strong>
               </div>
               <div class="dsm-item">
-                <span>Reliable (0):</span>
+                <span>Real Articles:</span>
                 <strong class="text-safe">10,387 (49.94%)</strong>
               </div>
               <div class="dsm-item">
-                <span>Unreliable (1):</span>
+                <span>Fake Articles:</span>
                 <strong class="text-danger">10,413 (50.06%)</strong>
               </div>
             </div>
-            <p class="ds-note">Clean 50/50 balance eliminates majority-class skew and enables unbiased confusion matrix symmetry.</p>
+            <p class="ds-note">A clean 50/50 balance ensures the AI is tested fairly without favoring real or fake news.</p>
           </div>
         </div>
 
         <!-- Right: Dynamic Confusion Matrix & Architectural Insights -->
         <div class="benchmark-cm-card">
           <div class="cm-header-row">
-            <h3 class="card-subtitle" id="cmModelTitle">Confusion Matrix: Passive Aggressive Classifier</h3>
+            <h3 class="card-subtitle" id="cmModelTitle">Accuracy Breakdown: Correct vs Incorrect Predictions</h3>
             <span class="badge-pill safe" id="cmAccuracyBadge">96.08% Acc</span>
           </div>
 
           <!-- Interactive CM Grid -->
           <div class="cm-interactive-grid">
-            <div class="cm-axis-y">Actual Class</div>
+            <div class="cm-axis-y">Actual News</div>
             <div class="cm-cells-wrapper">
-              <div class="cm-axis-x">Predicted Class</div>
+              <div class="cm-axis-x">AI Prediction</div>
               <div class="cm-matrix">
                 <div class="cm-cell cell-tn" id="cmCellTN">
                   <span class="cm-val" id="cmTN">1,048</span>
-                  <span class="cm-lbl">True Negatives (Real)</span>
+                  <span class="cm-lbl">Correct Real Stories</span>
                 </div>
                 <div class="cm-cell cell-fp" id="cmCellFP">
                   <span class="cm-val" id="cmFP">43</span>
-                  <span class="cm-lbl">False Positives (Type I)</span>
+                  <span class="cm-lbl">Mistakenly Flagged as Fake</span>
                 </div>
                 <div class="cm-cell cell-fn" id="cmCellFN">
                   <span class="cm-val" id="cmFN">41</span>
-                  <span class="cm-lbl">False Negatives (Type II)</span>
+                  <span class="cm-lbl">Mistakenly Missed Fake Stories</span>
                 </div>
                 <div class="cm-cell cell-tp" id="cmCellTP">
                   <span class="cm-val" id="cmTP">1,012</span>
-                  <span class="cm-lbl">True Positives (Fake)</span>
+                  <span class="cm-lbl">Correct Fake Stories Caught</span>
                 </div>
               </div>
             </div>
@@ -191,11 +191,9 @@
 
           <!-- Mathematical Justification -->
           <div class="cm-theory-box">
-            <h4 id="cmTheoryTitle">Why PAC Outperforms Static Estimators:</h4>
+            <h4 id="cmTheoryTitle">Why This AI Model Outperforms Others:</h4>
             <p id="cmTheoryDesc">
-              The Passive-Aggressive algorithm updates model weights \(w\) only when an incoming sample incurs a non-zero hinge loss:
-              <code class="code-math">L(w; (x, y)) = \max(0, 1 - y \cdot (w \cdot x))</code>.
-              When prediction is correct, it remains strictly <em>passive</em>; when misclassified, it updates <em>aggressively</em> with minimal perturbation, making it exceptionally resilient to shifting disinformation semantics.
+              The Passive-Aggressive algorithm updates its weights only when it makes a mistake. If it classifies a story correctly, it stays calm; if mistaken, it quickly updates its knowledge to adapt to new disinformation techniques.
             </p>
           </div>
         </div>
@@ -204,23 +202,23 @@
       <!-- Architectural Diagrams Section -->
       <div class="diagrams-gallery-section">
         <div class="section-heading-wrap">
-          <span class="section-badge">Visual Blueprint</span>
-          <h2>System Flow &amp; Process Architecture Diagrams</h2>
-          <p>Architectural block and process flow representations adapted from the reference machine learning implementation:</p>
+          <span class="section-badge">System Blueprints</span>
+          <h2>System Flow &amp; Design Blueprints</h2>
+          <p>Visual diagrams showing how news flows through data ingestion, cleaning, AI scoring, and feed reach control:</p>
         </div>
 
         <div class="diagrams-dual-grid">
           <div class="diagram-display-card">
             <h3>System Block Diagram</h3>
-            <p>End-to-end data ingestion, lemmatization, vectorization, PAC training, and Flask microservice layers.</p>
+            <p>Overview of data cleaning, word extraction, AI training, and the web app server.</p>
             <div class="diagram-img-wrap">
               <img src="{{ url_for('static', filename='../Images/BlockDiagram.svg') }}" alt="System Block Diagram">
             </div>
           </div>
 
           <div class="diagram-display-card">
-            <h3>Inference Process Flow Diagram</h3>
-            <p>Step-by-step real-time article transformation from raw input to reach-weighted visibility verdict.</p>
+            <h3>Inference Process Flow</h3>
+            <p>Step-by-step path an article takes from user input to final fact-check verdict.</p>
             <div class="diagram-img-wrap">
               <img src="{{ url_for('static', filename='../Images/Processflow.svg') }}" alt="Inference Process Flow Diagram">
             </div>

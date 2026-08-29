@@ -20,14 +20,14 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media" class="active-link">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media" class="active-link">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
       </nav>
     </div>
   </header>
@@ -35,57 +35,61 @@
   <main class="studio-main">
     <div class="studio-container full-width">
       <div class="studio-header">
-        <span class="section-badge">Multimodal Neural Inspection</span>
-        <h1 class="studio-title">Image &amp; Video Fake News Verification</h1>
-        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Upload photos, doctored screenshots, viral memes, or videos to detect digital manipulation, AI deepfakes, and recycled out-of-context media.</p>
+        <span class="section-badge">Photo &amp; Video Verifier</span>
+        <h1 class="studio-title">Check Photos &amp; Videos (Deepfakes &amp; Edits)</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Upload any photo, news screenshot, or video to check for digital tampering, AI generation, and out-of-context claims.</p>
       </div>
 
       <div class="fn-media-grid">
         <!-- Left: Upload & Presets -->
         <div class="fn-media-upload-card">
           <div class="fn-card-title-row">
-            <span>Upload Media Asset</span>
-            <span class="model-badge">Computer Vision + OCR</span>
+            <span>Step 1: Upload a File or Pick a Sample</span>
+            <span class="model-badge">Vision AI + Text OCR</span>
           </div>
-          <p class="fn-instruction">Select any visual asset to perform Error Level Analysis (ELA), text extraction, and deepfake heuristic scoring:</p>
+          <p class="fn-instruction">Upload any photo or video clip to scan for digital edits, AI faces, and extracted text:</p>
 
           <!-- Dropzone -->
           <div class="media-dropzone" id="mediaDropzone" onclick="document.getElementById('fileInput').click()">
             <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;" onchange="handleStandaloneFileUpload(event)">
             <div class="dropzone-content">
-              <div class="dropzone-icon">📁</div>
-              <h4 class="dropzone-title">Drag &amp; Drop Photo or Video Here</h4>
-              <p class="dropzone-desc">Supports PNG, JPG, JPEG, WEBP, MP4, WEBM (Max 50MB)</p>
-              <button type="button" class="btn btn-primary btn-sm dropzone-btn">Browse Local Files</button>
+              <div class="drop-icon">📸</div>
+              <h4>Drop your photo or video here</h4>
+              <p>Supports PNG, JPG, WEBP, MP4, WEBM (up to 50MB)</p>
+              <button type="button" class="btn btn-outline btn-sm">Browse Files</button>
             </div>
           </div>
 
           <!-- Presets -->
           <div class="media-presets-wrap">
-            <label>Or Evaluate with Realistic Forensic Presets:</label>
-            <div class="media-preset-chips">
-              <button type="button" class="media-preset-btn active" onclick="loadStandalonePreset('fakeScreenshot')">
-                🚨 Doctored News Headline Screenshot
-              </button>
-              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('deepfakeAi')">
-                🤖 AI Deepfake Photo (Diffusion Generation)
-              </button>
-              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('authenticPress')">
-                ✅ Authentic Press Release (C2PA Verified)
-              </button>
-              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('outOfContextVideo')">
-                🎥 Recycled Viral Video (Out-of-Context)
-              </button>
+            <span class="mp-label">Try an Example:</span>
+            <div class="mp-buttons">
+              <button type="button" class="media-preset-btn active" onclick="loadStandalonePreset('doctored')">🚨 Edited Headline</button>
+              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('deepfake')">🤖 AI Deepfake</button>
+              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('real')">✅ Real Photo</button>
+              <button type="button" class="media-preset-btn" onclick="loadStandalonePreset('recycled')">⚠️ Recycled Video</button>
             </div>
+          </div>
+
+          <div class="media-feature-toggles">
+            <label class="toggle-control">
+              <input type="checkbox" id="elaToggle" onchange="toggleStandaloneEla()">
+              <span class="toggle-track"></span>
+              <span class="toggle-text">👁️ Tampering Heatmap (ELA)</span>
+            </label>
           </div>
         </div>
 
-        <!-- Right: Preview & Forensic Diagnostics -->
+        <!-- Right: Preview & Verdict -->
         <div class="fn-media-results-card">
-          <!-- Preview Box with Laser Scanner -->
-          <div class="media-preview-container">
+          <div class="fn-card-title-row">
+            <span>Step 2: Verification Results</span>
+            <span class="badge-pill safe" id="scanStatusBadge">Scan Complete</span>
+          </div>
+
+          <div class="media-preview-box" id="mediaPreviewBox">
             <div class="scanner-laser" id="scannerLaser"></div>
-            <div class="media-preview-box" id="previewBox">
+            <div id="mediaDisplayArea" class="media-canvas-wrap">
               <img id="imagePreview" src="" alt="Forensic Inspection Preview" style="display: none;">
               <video id="videoPreview" src="" controls style="display: none;"></video>
               <div class="media-placeholder" id="mediaPlaceholder">
@@ -93,62 +97,47 @@
                 <span>Ready for Multimodal Forensic Inspection</span>
               </div>
             </div>
-
-            <div class="media-preview-toolbar">
-              <span class="preview-filename" id="mediaFilename">viral_doctored_headline.png</span>
-              <div class="preview-tools">
-                <button type="button" class="tool-toggle-btn" id="elaToggleBtn" onclick="toggleStandaloneEla()">
-                  <span>👁️ Error Level Analysis (ELA)</span>
-                </button>
-                <button type="button" class="btn btn-primary btn-sm" onclick="triggerStandaloneScan()">
-                  <span>⚡ Re-Scan Asset</span>
-                </button>
-              </div>
-            </div>
+            <div class="media-info-pill" id="mediaInfoPill">Doctored_Headline.jpg · 1920x1080 · JPG</div>
           </div>
 
-          <!-- Diagnostics Panel -->
-          <div class="forensic-diagnostics-panel">
-            <div class="media-verdict-hero fake-active" id="verdictHero">
+          <div class="media-verdict-details">
+            <div class="media-verdict-hero danger" id="verdictHero">
               <div class="mvh-icon" id="verdictIcon">🚨</div>
               <div class="mvh-text">
-                <span class="mvh-label" id="verdictSub">Digital Manipulation &amp; Misinformation Detected</span>
-                <h3 class="mvh-title" id="verdictTitle">Manipulated Headline Screenshot (Fabricated News)</h3>
-              </div>
-              <div class="mvh-badge">
-                <span class="badge-pill danger" id="statusPill">High Risk</span>
+                <span class="mvh-sub" id="verdictSub">TAMPERED / FAKE PHOTO</span>
+                <h3 id="verdictHeadline">Altered News Headline Screenshot</h3>
               </div>
             </div>
 
             <div class="media-metrics-grid">
               <div class="media-metric-box">
                 <div class="mmb-head">
-                  <span>Deepfake / Synthetic Score:</span>
+                  <span>Deepfake &amp; AI Risk:</span>
                   <strong class="mmb-score danger" id="deepfakeScore">94.8% Risk</strong>
                 </div>
                 <div class="meter-bar-track">
                   <div class="meter-bar-fill fake-fill" id="deepfakeBar" style="width: 94.8%;"></div>
                 </div>
-                <p class="mmb-desc" id="deepfakeDesc">Error Level Analysis reveals severe compression divergence along headline banner boundaries.</p>
+                <p class="mmb-desc" id="deepfakeDesc">Digital tampering detected around text banner boundaries.</p>
               </div>
 
               <div class="media-metric-box">
                 <div class="mmb-head">
-                  <span>Algorithmic Feed Reach:</span>
+                  <span>Allowed Social Feed Reach:</span>
                   <strong class="mmb-score danger" id="reachScore">0.05x Throttled</strong>
                 </div>
                 <div class="meter-bar-track">
                   <div class="meter-bar-fill fake-fill" id="reachBar" style="width: 5%;"></div>
                 </div>
-                <p class="mmb-desc" id="reachDesc">Social virality throttled by 95% to prevent deceptive disinformation contagion.</p>
+                <p class="mmb-desc" id="reachDesc">Post reach throttled by 95% to stop viral spread of misleading visuals.</p>
               </div>
             </div>
 
             <!-- OCR Text Extraction & PAC NLP -->
             <div class="ocr-inspection-card">
               <div class="ocr-card-head">
-                <span class="ocr-title">In-Image Text Extraction (OCR) &amp; PAC Assessment:</span>
-                <span class="ocr-badge" id="ocrBadge">PAC NLP: 98.2% Fabricated News</span>
+                <span class="ocr-title">Text Found in Image (Fact-Checked by AI):</span>
+                <span class="ocr-badge" id="ocrBadge">AI Verdict: 98.2% Fake</span>
               </div>
               <div class="ocr-text-box" id="ocrText">
                 "BREAKING: WHITE HOUSE ADMITS SECRET MOON BASE CONTROLS GLOBAL WEATHER AND TIDAL FREQUENCIES"
@@ -164,11 +153,11 @@
             <!-- Provenance -->
             <div class="provenance-card">
               <div class="prov-head">
-                <span>Provenance &amp; Metadata Integrity Check:</span>
-                <span class="prov-tag" id="provTag">Template Generator Match</span>
+                <span>File Origin &amp; Camera Details:</span>
+                <span class="prov-tag" id="provTag">Meme Template Detected</span>
               </div>
               <p class="prov-text" id="provText">
-                Generated via automated meme canvas. Missing C2PA authenticity headers; conflicting JPEG quantisation tables.
+                Created with an online editing tool. Missing genuine camera sensor metadata.
               </p>
             </div>
           </div>

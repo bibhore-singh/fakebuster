@@ -22,15 +22,15 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
-        <a href="/predict" class="btn btn-primary btn-sm">Launch Predictor ⚡</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
+        <a href="/predict" class="btn btn-primary btn-sm">Start Checking ⚡</a>
       </nav>
     </div>
   </header>
@@ -81,9 +81,9 @@
           <p class="metric-desc">Sublinear term frequency mapping for unigrams and bigrams.</p>
         </div>
         <div class="metric-card">
-          <div class="metric-val">Source-Level</div>
-          <div class="metric-label">Visibility Weights</div>
-          <p class="metric-desc">Tolerates single-article noise by aggregating publisher history.</p>
+          <div class="metric-val">Source Trust</div>
+          <div class="metric-label">Social Feed Reach</div>
+          <p class="metric-desc">Reduces false alarms by looking at the publisher's track record over time.</p>
         </div>
       </div>
     </div>
@@ -92,22 +92,22 @@
   <!-- Problem Definition Section -->
   <section id="problem" class="content-section">
     <div class="section-container">
-      <div class="section-badge">Core Innovation</div>
-      <h2 class="section-heading">The Problem &amp; Our Source Weighting Approach</h2>
+      <div class="section-badge">Why This Works Better</div>
+      <h2 class="section-heading">The Problem With Old Fact-Checkers &amp; Our Smarter Solution</h2>
       <p class="section-subtext">
-        Most fake news detectors analyze articles in total isolation, leaving them vulnerable to single-article misclassifications. FAKEBUSTER shifts the paradigm toward <strong>Source Credibility Identification</strong>.
+        Most tools only look at one article in isolation. FAKEBUSTER focuses on <strong>who is publishing it</strong> and tracks their overall honesty over time.
       </p>
 
       <div class="problem-solution-grid">
         <div class="box-card problem-box">
           <div class="card-icon">⚠️</div>
-          <h3>Traditional Article Classification</h3>
-          <p>Treats every piece of content in a vacuum. A single ambiguous or satiric article can yield a false positive, frustrating legitimate authors while nimble disinformation operations constantly cycle through disposable domains.</p>
+          <h3>The Old Way: Checking One Article in Isolation</h3>
+          <p>If an article is satire or has a joke headline, normal tools mistakenly flag it as fake. At the same time, fake news creators easily slip past filters by slightly rewording text.</p>
         </div>
         <div class="box-card solution-box">
           <div class="card-icon">🎯</div>
-          <h3>Source-Level Aggregation</h3>
-          <p>By monitoring the track record of publishing sources over multiple articles, we broaden our article misclassification tolerance. Once a source exhibits a systematic pattern of producing fake news, its content visibility is throttled across social feeds.</p>
+          <h3>Our Way: Tracking the Publisher's Honesty</h3>
+          <p>By keeping track of multiple stories from the same author or website, we build an honest trust score. If a website repeatedly produces fake news, its posts are automatically downranked in social media feeds.</p>
         </div>
       </div>
     </div>
@@ -116,36 +116,36 @@
   <!-- Model & Pipeline Section -->
   <section id="model" class="content-section">
     <div class="section-container">
-      <div class="section-badge">Algorithmic Architecture</div>
-      <h2 class="section-heading">Why the Passive Aggressive Classifier?</h2>
+      <div class="section-badge">How the AI Works</div>
+      <h2 class="section-heading">Why We Chose This Fast &amp; Smart AI Model</h2>
       <p class="section-subtext">
-        The Passive Aggressive Classifier (PAC) is a margin-based online learning algorithm specifically tailored for massive, evolving text data.
+        The AI (Passive Aggressive Classifier) is specially built to process thousands of live news headlines every second with sub-2 millisecond response time.
       </p>
 
       <div class="pac-architecture-cards">
         <div class="pac-card">
           <div class="pac-step">01</div>
-          <h4>Passive when Correct</h4>
-          <p>If an incoming news article is accurately classified beyond the margin threshold (hinge loss = 0), the model weights remain untouched, preserving training stability.</p>
+          <h4>Stays Calm When Right</h4>
+          <p>When the AI correctly identifies real or fake news, it keeps its knowledge base steady without wasting computing power.</p>
         </div>
         <div class="pac-card">
           <div class="pac-step">02</div>
-          <h4>Aggressive when Mistaken</h4>
-          <p>If an article is misclassified, the algorithm executes an aggressive update with minimal perturbation, adapting to evolving disinformation terminology in real-time.</p>
+          <h4>Learns Fast When Mistaken</h4>
+          <p>If it encounters a clever new disinformation trick, it immediately updates its memory so it catches it the next time.</p>
         </div>
         <div class="pac-card">
           <div class="pac-step">03</div>
-          <h4>Production Serialization</h4>
-          <p>The vectorizer and model weights are packaged as <code>vector.pkl</code> and <code>model.pkl</code> for ultra-low latency microsecond inference in Flask.</p>
+          <h4>Instant Speed</h4>
+          <p>Packaged for instant checking on web and mobile in under 2 milliseconds.</p>
         </div>
       </div>
 
       <div class="cta-banner">
         <div class="cta-text">
-          <h3>Test the Detector in Real Time</h3>
-          <p>Paste any news title, author, or body paragraph to classify its credibility and calculate social media visibility impact.</p>
+          <h3>Test Any News Story Now</h3>
+          <p>Paste any headline, author name, or article text to see whether it is authentic and check how much social reach it should receive.</p>
         </div>
-        <a href="/predict" class="btn btn-primary btn-lg">Open Prediction Studio →</a>
+        <a href="/predict" class="btn btn-primary btn-lg">Check a News Story Now →</a>
       </div>
     </div>
   </section>

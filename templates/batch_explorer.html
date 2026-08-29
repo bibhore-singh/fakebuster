@@ -20,14 +20,14 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch" class="active-link">Batch Explorer</a>
-        <a href="/sources">Source Registry</a>
-        <a href="/docs">API Docs</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch" class="active-link">Check Multiple Articles</a>
+        <a href="/sources">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
       </nav>
     </div>
   </header>
@@ -35,28 +35,28 @@
   <main class="studio-main">
     <div class="studio-container full-width">
       <div class="studio-header">
-        <span class="section-badge">Evaluation Dataset Results</span>
-        <h1 class="studio-title">Batch Test Dataset Predictions (test.csv)</h1>
-        <p class="studio-subtext">Passive Aggressive Classifier verdicts and source visibility multipliers across unseen benchmark articles.</p>
+        <span class="section-badge">Bulk News Checker</span>
+        <h1 class="studio-title">Check Multiple News Articles (Bulk Dataset)</h1>
+        <p class="studio-subtext">See instant AI fact-checking results and social media reach recommendations across a list of test articles.</p>
       </div>
 
       <!-- Stats Row -->
       <div class="batch-stats-row">
         <div class="batch-stat-card">
           <span class="stat-big-val">{{ predictions|length }}</span>
-          <span class="stat-small-lbl">Articles Evaluated</span>
+          <span class="stat-small-lbl">Total Articles Checked</span>
         </div>
         <div class="batch-stat-card">
           <span class="stat-big-val green">{{ predictions|selectattr('is_fake', 'equalto', '0')|list|length }}</span>
-          <span class="stat-small-lbl">Reliable (Authentic)</span>
+          <span class="stat-small-lbl">Real &amp; Authentic</span>
         </div>
         <div class="batch-stat-card">
           <span class="stat-big-val rose">{{ predictions|selectattr('is_fake', 'equalto', '1')|list|length }}</span>
-          <span class="stat-small-lbl">Unreliable (Fake News)</span>
+          <span class="stat-small-lbl">Fake &amp; Misleading</span>
         </div>
         <div class="batch-stat-card">
           <a href="/download/predictions" class="btn btn-primary btn-sm">
-            <span>📥 Export Predictions CSV</span>
+            <span>📥 Download Results CSV</span>
           </a>
         </div>
       </div>
@@ -68,8 +68,8 @@
         </div>
         <div class="filter-pills">
           <button class="filter-btn active" onclick="setFilter('all')">All ({{ predictions|length }})</button>
-          <button class="filter-btn" onclick="setFilter('reliable')">✅ Reliable Only</button>
-          <button class="filter-btn" onclick="setFilter('unreliable')">🚨 Unreliable Only</button>
+          <button class="filter-btn" onclick="setFilter('reliable')">✅ Real News Only</button>
+          <button class="filter-btn" onclick="setFilter('unreliable')">🚨 Fake News Only</button>
         </div>
       </div>
 
@@ -80,12 +80,12 @@
             <thead>
               <tr>
                 <th width="60">ID</th>
-                <th>Headline / Story Title</th>
-                <th>Author / Source</th>
-                <th width="160">PAC Verdict</th>
-                <th width="110">Confidence</th>
+                <th>Article Headline</th>
+                <th>Author / Publisher</th>
+                <th width="160">Result</th>
+                <th width="110">AI Confidence</th>
                 <th width="120">Feed Reach</th>
-                <th>Salient N-Grams</th>
+                <th>Key Words Flagged</th>
               </tr>
             </thead>
             <tbody>
@@ -96,7 +96,7 @@
                 <td class="author-cell">{{ p.author }}</td>
                 <td>
                   <span class="verdict-pill-mini {% if p.is_fake == '1' %}fake-mini{% else %}real-mini{% endif %}">
-                    {% if p.is_fake == '1' %}🚨 Unreliable{% else %}✅ Reliable{% endif %}
+                    {% if p.is_fake == '1' %}🚨 Fake News{% else %}✅ Real News{% endif %}
                   </span>
                 </td>
                 <td class="conf-cell">

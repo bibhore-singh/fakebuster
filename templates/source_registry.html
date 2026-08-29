@@ -20,14 +20,14 @@
         <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
       </a>
       <nav class="nav-links">
-        <a href="/">Overview</a>
-        <a href="/predict">Prediction Studio</a>
-        <a href="/media">Media Forensics</a>
-        <a href="/nlp-lab">NLP Lab</a>
-        <a href="/benchmark">Model Benchmarks</a>
-        <a href="/batch">Batch Explorer</a>
-        <a href="/sources" class="active-link">Source Registry</a>
-        <a href="/docs">API Docs</a>
+        <a href="/">Home</a>
+        <a href="/predict">Check News</a>
+        <a href="/media">Check Photos &amp; Videos</a>
+        <a href="/nlp-lab">Text Analysis Lab</a>
+        <a href="/benchmark">AI Accuracy &amp; Models</a>
+        <a href="/batch">Check Multiple Articles</a>
+        <a href="/sources" class="active-link">News Source Ratings</a>
+        <a href="/docs">Developer API</a>
       </nav>
     </div>
   </header>
@@ -35,18 +35,18 @@
   <main class="studio-main">
     <div class="studio-container">
       <div class="studio-header">
-        <span class="section-badge">Multi-Article Track Record</span>
-        <h1 class="studio-title">Source Credibility Directory &amp; Registry</h1>
-        <p class="studio-subtext">Aggregated publisher reputation scores that dictate social media distribution reach weights.</p>
+        <span class="section-badge">Publisher Track Record</span>
+        <h1 class="studio-title">News Source Trust Ratings &amp; Feed Control</h1>
+        <p class="studio-subtext">See how different news websites and publishers are scored based on their track record, and how much reach they are allowed in social media feeds.</p>
       </div>
 
       <!-- Quick Domain Search Box -->
       <div class="source-search-card">
-        <h3>🔍 Instant Domain Reputation Lookup</h3>
-        <p>Type any media publisher, news website, or telegram outlet to check its algorithmic standing:</p>
+        <h3>🔍 Check a News Website's Trust Score</h3>
+        <p>Type any media publisher, news website, or blog to check its reputation standing:</p>
         <div class="lookup-input-row">
-          <input type="text" id="domainInput" placeholder="e.g. reuters, nature, viralhoaxnews, bbc...">
-          <button class="btn btn-primary btn-sm" onclick="checkSourceLive()">Verify Source Standing</button>
+          <input type="text" id="domainInput" placeholder="e.g. reuters, nature, theonion, bbc...">
+          <button class="btn btn-primary btn-sm" onclick="checkSourceLive()">Check Website Trust</button>
         </div>
         <div class="lookup-result-box" id="lookupResult" style="display: none;">
           <!-- Dynamically populated -->
@@ -55,7 +55,7 @@
 
       <!-- Known Publishers Registry Grid -->
       <div class="registry-section">
-        <h3 class="registry-heading">Indexed Publishers &amp; Algorithmic Safety Tiers</h3>
+        <h3 class="registry-heading">Tracked Publishers &amp; Trust Levels</h3>
         <div class="sources-grid">
           {% for name, s in sources.items() %}
           <div class="source-card {% if s.trust >= 0.85 %}tier-1{% elif s.trust >= 0.5 %}tier-2{% else %}tier-3{% endif %}">
@@ -65,7 +65,7 @@
             </div>
             <h4 class="source-card-title">{{ name|title }}</h4>
             <div class="source-status-row">
-              <span>Algorithmic Feed Action:</span>
+              <span>Feed Reach Action:</span>
               <strong>{{ s.status }}</strong>
             </div>
             <div class="source-meter-track">
