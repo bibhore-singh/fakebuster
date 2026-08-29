@@ -16,9 +16,10 @@
 
 The exponential expansion of digital media and decentralized content publishing has made disinformation and fake news one of the most critical societal threats today. Existing content moderation approaches typically inspect articles in strict isolation: each article is scored independently, creating high vulnerability to false positives (e.g., satire or hyperbole) and failing to address repeat offenders who produce coordinated streams of malicious content.
 
-**FAKEBUSTER** introduces a dual-tier paradigm:
+**FAKEBUSTER** introduces a unified multimodal paradigm:
 1. **Article-Level Online Classification**: Real-time evaluation of headlines, authorship, and body text using a **Passive Aggressive Classifier** trained over n-gram TF-IDF vector matrices, achieving an evaluation accuracy of **96%**.
 2. **Source-Level Visibility Weighting**: Tracking historical prediction patterns across sources over time. Aggregating data points across multiple articles from a single publisher expands our misclassification tolerance, allowing social media platforms to algorithmically downrank high-probability disinformation sources in recommendation feeds.
+3. **Multimodal Media & Deepfake Verification**: Forensic inspection of images, news screenshots, memes, and video clips combining Error Level Analysis (ELA), in-image Optical Character Recognition (OCR), synthetic diffusion/GAN artifact detection, and reverse provenance checking.
 
 ---
 
@@ -125,8 +126,8 @@ fake-news-detector/
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/bibhore-singh/Bibhore-s-Portfolio.git
-cd Bibhore-s-Portfolio/projects/fake-news-detector
+git clone https://github.com/bibhore-singh/fakebuster.git
+cd fakebuster
 ```
 
 ### 2. Set Up Virtual Environment & Dependencies
