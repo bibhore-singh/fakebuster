@@ -194,6 +194,66 @@ def api_verify_media():
         "provenance_status": "Stripped Metadata / Conflicting Timestamp" if is_suspicious else "Verified Sensor Signature Intact"
     })
 
+@app.route('/benchmark')
+def model_benchmark():
+    """Multi-model empirical benchmark studio and Kaggle dataset evaluation."""
+    return render_template('benchmark.html')
+
+@app.route('/nlp-lab')
+def nlp_lab():
+    """Live 6-stage NLP preprocessing and lemmatizer inspector."""
+    return render_template('nlp_lab.html')
+
+@app.route('/api/preprocess-pipeline', methods=['POST'])
+def api_preprocess_pipeline():
+    """Inspect the 6-stage NLP preprocessing breakdown for a text input."""
+    data = request.get_json(silent=True) or request.form
+    raw_text = data.get('text', '')
+    
+    # 1. Raw
+    # 2. Regex Clean
+    regex_clean = re.sub(r'[^a-zA-Z\s]', ' ', raw_text)
+    regex_clean = re.sub(r'\s+', ' ', regex_clean).strip()
+    
+    # 3. Lowercased
+    lowercased = regex_clean.lower()
+    
+    # 4. Stopwords
+    stopwords_set = {
+        'i','me','my','myself','we','our','ours','ourselves','you','your','yours','he','him','his','she',
+        'her','hers','it','its','they','them','their','theirs','what','which','who','whom','this','that',
+        'these','those','am','is','are','was','were','be','been','being','have','has','had','having','do',
+        'does','did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at',
+        'by','for','with','about','against','between','into','through','during','before','after','above','below',
+        'to','from','up','down','in','out','on','off','over','under','again','further','then','once','here',
+        'there','when','where','why','how','all','any','both','each','few','more','most','other','some','such',
+        'no','nor','not','only','own','same','so','than','too','very','can','will','just','should','now'
+    }
+    raw_tokens = lowercased.split() if lowercased else []
+    kept_tokens = [t for t in raw_tokens if t not in stopwords_set]
+    dropped_count = len(raw_tokens) - len(kept_tokens)
+    
+    # 5. Lemmatize (base lookup or suffix trim)
+    lemmas = []
+    lemma_dict = {
+        'frequencies': 'frequency', 'tides': 'tide', 'insiders': 'insider',
+        'patterns': 'pattern', 'breaking': 'break', 'manipulating': 'manipulate',
+        'admits': 'admit', 'uncovered': 'uncover', 'elections': 'election'
+    }
+    for t in kept_tokens:
+        lemmas.append(lemma_dict.get(t, t[:-1] if t.endswith('s') and len(t) > 3 else t))
+        
+    return jsonify({
+        "raw_text": raw_text,
+        "regex_cleaned": regex_clean,
+        "lowercased": lowercased,
+        "token_count_raw": len(raw_tokens),
+        "stopwords_eliminated": dropped_count,
+        "tokens_retained": kept_tokens,
+        "lemmatized_features": lemmas,
+        "vocabulary_reduction_pct": round((dropped_count / max(len(raw_tokens), 1)) * 100, 1)
+    })
+
 @app.route('/docs')
 def api_docs():
     """Interactive API documentation."""

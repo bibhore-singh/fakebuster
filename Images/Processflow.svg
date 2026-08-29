@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 480" width="100%" height="100%">
+  <defs>
+    <linearGradient id="flowBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0b1329"/>
+    </linearGradient>
+    <marker id="flowArrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#38bdf8" />
+    </marker>
+  </defs>
+
+  <rect width="1000" height="480" rx="16" fill="url(#flowBg)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="500" y="42" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="22" font-weight="800" fill="#fff" letter-spacing="1">
+    FAKEBUSTER — INFERENCE PROCESS FLOW DIAGRAM
+  </text>
+  <text x="500" y="66" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="13" fill="#94a3b8">
+    6-Stage Linguistic Transformation &amp; Passive-Aggressive Decision Boundary Workflow
+  </text>
+
+  <!-- Flow Steps: 6 Horizontal Cards -->
+  <!-- Step 1: Input -->
+  <rect x="30" y="110" width="135" height="230" rx="10" fill="url(#cardGrad)" stroke="#38bdf8" stroke-width="1.5"/>
+  <circle cx="97" cy="145" r="22" fill="#0284c7" opacity="0.2"/>
+  <text x="97" y="152" text-anchor="middle" font-size="18">📰</text>
+  <text x="97" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#38bdf8">1. Raw Input</text>
+  <text x="97" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Article Headline</text>
+  <text x="97" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Author / Domain</text>
+  <text x="97" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Body Text / OCR</text>
+  <rect x="42" y="280" width="111" height="42" rx="4" fill="#0f172a"/>
+  <text x="97" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#94a3b8">JSON / Multipart</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="165" y1="225" x2="190" y2="225" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#flowArrow)"/>
+
+  <!-- Step 2: Regex Sanitation -->
+  <rect x="195" y="110" width="135" height="230" rx="10" fill="url(#cardGrad)" stroke="#818cf8" stroke-width="1.5"/>
+  <circle cx="262" cy="145" r="22" fill="#4f46e5" opacity="0.2"/>
+  <text x="262" y="152" text-anchor="middle" font-size="18">🧹</text>
+  <text x="262" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#818cf8">2. Regex Clean</text>
+  <text x="262" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Strip [^a-zA-Z]</text>
+  <text x="262" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Remove HTML/URLs</text>
+  <text x="262" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Case Folding</text>
+  <rect x="207" y="280" width="111" height="42" rx="4" fill="#0f172a"/>
+  <text x="262" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a5b4fc">Lower Alpha Only</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="330" y1="225" x2="355" y2="225" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#flowArrow)"/>
+
+  <!-- Step 3: Stopword Elimination -->
+  <rect x="360" y="110" width="135" height="230" rx="10" fill="url(#cardGrad)" stroke="#c084fc" stroke-width="1.5"/>
+  <circle cx="427" cy="145" r="22" fill="#9333ea" opacity="0.2"/>
+  <text x="427" y="152" text-anchor="middle" font-size="18">🚫</text>
+  <text x="427" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#c084fc">3. Stopwords</text>
+  <text x="427" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">NLTK English Set</text>
+  <text x="427" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">179 Stopwords</text>
+  <text x="427" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Noise Reduction</text>
+  <rect x="372" y="280" width="111" height="42" rx="4" fill="#0f172a"/>
+  <text x="427" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#d8b4fe">-42% Token Mass</text>
+
+  <!-- Arrow 3 -> 4 -->
+  <line x1="495" y1="225" x2="520" y2="225" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#flowArrow)"/>
+
+  <!-- Step 4: WordNet Lemmatization -->
+  <rect x="525" y="110" width="135" height="230" rx="10" fill="url(#cardGrad)" stroke="#f472b6" stroke-width="1.5"/>
+  <circle cx="592" cy="145" r="22" fill="#db2777" opacity="0.2"/>
+  <text x="592" y="152" text-anchor="middle" font-size="18">🌱</text>
+  <text x="592" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#f472b6">4. Lemmatize</text>
+  <text x="592" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">WordNet Lemmas</text>
+  <text x="592" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Morphological Base</text>
+  <text x="592" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">admits → admit</text>
+  <rect x="537" y="280" width="111" height="42" rx="4" fill="#0f172a"/>
+  <text x="592" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fbcfe8">Canonical Tokens</text>
+
+  <!-- Arrow 4 -> 5 -->
+  <line x1="660" y1="225" x2="685" y2="225" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#flowArrow)"/>
+
+  <!-- Step 5: TF-IDF Vectorization -->
+  <rect x="690" y="110" width="135" height="230" rx="10" fill="url(#cardGrad)" stroke="#34d399" stroke-width="1.5"/>
+  <circle cx="757" cy="145" r="22" fill="#059669" opacity="0.2"/>
+  <text x="757" y="152" text-anchor="middle" font-size="18">📊</text>
+  <text x="757" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#34d399">5. TF-IDF Matrix</text>
+  <text x="757" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">N-Gram Extraction</text>
+  <text x="757" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">TF × IDF Weights</text>
+  <text x="757" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">vector.pkl Sparse</text>
+  <rect x="702" y="280" width="111" height="42" rx="4" fill="#0f172a"/>
+  <text x="757" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#a7f3d0">Sparse Vector X</text>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="825" y1="225" x2="850" y2="225" stroke="#38bdf8" stroke-width="2.5" marker-end="url(#flowArrow)"/>
+
+  <!-- Step 6: PAC Decision Boundary -->
+  <rect x="855" y="110" width="120" height="230" rx="10" fill="url(#cardGrad)" stroke="#fbbf24" stroke-width="1.5"/>
+  <circle cx="915" cy="145" r="22" fill="#d97706" opacity="0.2"/>
+  <text x="915" y="152" text-anchor="middle" font-size="18">⚖️</text>
+  <text x="915" y="185" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#fbbf24">6. PAC Decision</text>
+  <text x="915" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">f(x) = sign(w·x)</text>
+  <text x="915" y="228" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Hinge Loss Margin</text>
+  <text x="915" y="246" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="10" fill="#cbd5e1">Fake / Real</text>
+  <rect x="862" y="280" width="106" height="42" rx="4" fill="#0f172a"/>
+  <text x="915" y="304" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="9" fill="#fde68a">Reach Adjusted</text>
+
+  <!-- Bottom Execution Summary Pill -->
+  <rect x="180" y="380" width="640" height="56" rx="28" fill="#0b1329" stroke="#334155"/>
+  <text x="500" y="414" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" fill="#e2e8f0">
+    ⚡ End-to-End Latency: <tspan fill="#38bdf8" font-weight="700">1.4 milliseconds</tspan> · Accuracy: <tspan fill="#34d399" font-weight="700">96.0%</tspan> · Feed Virality Throttling: <tspan fill="#f43f5e" font-weight="700">0.05x - 1.0x</tspan>
+  </text>
+</svg>

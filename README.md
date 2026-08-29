@@ -82,19 +82,18 @@ The model is trained and validated on the benchmark **Kaggle Fake News Dataset**
 
 ## 🏗️ System Architecture & Data Pipeline
 
-```mermaid
-flowchart TD
-    A[Raw News Ingestion: Title, Author, Text] --> B[Text Preprocessing & Sanitization]
-    B -->|URL Removal, Lowercasing, Stopwords| C[TF-IDF N-Gram Vectorizer]
-    C -->|Feature Matrix: vector.pkl| D[Passive Aggressive Classifier]
-    D -->|Decision Boundary & Hinge Loss| E{Authenticity Classification}
-    E -->|Label 0: Reliable| F1[Reliable Content Pipeline]
-    E -->|Label 1: Unreliable| F2[Misinformation Flagging]
-    F1 & F2 --> G[Source Credibility Aggregator]
-    G -->|Rolling Window Evaluation| H[Dynamic Visibility Weight Engine]
-    H -->|0.05x to 1.0x Reach Multiplier| I[Social Media Feed Distribution API]
-    E --> J[Flask Web Interface: app.py]
-```
+![FAKEBUSTER Block Diagram](Images/BlockDiagram.svg)
+
+### 6-Stage NLP Preprocessing Pipeline
+Adapted from modern machine learning news classification workflows:
+1. **Raw Ingestion**: Multi-attribute payload parsing (`title`, `author`, `text`, OCR-extracted text).
+2. **Regex Cleaning**: Eliminates non-alphabetic noise using `re.sub(r'[^a-zA-Z\s]', ' ', text)`.
+3. **Case Folding**: Full lowercase conversion for lexical uniformity.
+4. **Stopwords Elimination**: Filters 179 standard English stopwords via NLTK corpus (`nltk.corpus.stopwords.words('english')`).
+5. **WordNet Lemmatization**: Converts inflected word forms to canonical morphological dictionary lemmas (`WordNetLemmatizer().lemmatize(token)`).
+6. **TF-IDF N-Gram Vectorizer**: Calculates unigram and bigram term frequency-inverse document frequency coordinates (`vector.pkl`).
+
+![Inference Process Flow](Images/Processflow.svg)
 
 ---
 
@@ -102,21 +101,34 @@ flowchart TD
 
 ```text
 fake-news-detector/
+├── Images/
+│   ├── BlockDiagram.svg         # System Architecture Block Diagram
+│   ├── Processflow.svg          # Real-time Inference Process Flow
+│   └── ConfusionMatrix.svg      # Evaluation Confusion Matrix Blueprint
 ├── dataset/
-│   ├── train.csv                # Training dataset (id, title, author, text, label)
-│   └── test.csv                 # Testing dataset
+│   ├── train.csv                # Kaggle 20,800-article training benchmark
+│   └── test.csv                 # Testing evaluation set
 ├── static/
-│   └── css/
-│       └── style.css            # Dark cyber glassmorphism design system
+│   ├── css/
+│   │   └── style.css            # Dark glassmorphic design system
+│   └── js/                      # Interactive client-side scripts
 ├── templates/
-│   ├── Landingpage.html         # Application landing page & documentation
-│   └── prediction_page.html     # Interactive real-time prediction studio
+│   ├── Landingpage.html         # Portal overview & architecture showcase
+│   ├── prediction_page.html     # Interactive single-article verification studio
+│   ├── media_analyzer.html      # Multimodal image & video deepfake forensics
+│   ├── nlp_lab.html             # Live 6-stage NLP preprocessing & lemmatizer lab
+│   ├── benchmark.html           # Multi-model empirical benchmark studio
+│   ├── batch_explorer.html      # CSV/JSON batch dataset processing
+│   ├── source_registry.html     # Real-time source reputation & throttling registry
+│   └── api_docs.html            # Interactive OpenAPI endpoint documentation
 ├── Fake_News_Detector-PA.ipynb  # Interactive Jupyter Notebook for EDA & training
-├── train_model.py               # Complete training, evaluation & serialization pipeline
+├── train_model.py               # Training, evaluation & serialization pipeline
 ├── app.py                       # Production Flask web server & REST API
+├── run.sh                       # Linux / macOS 1-click startup script
+├── run.bat                      # Windows 1-click startup script
 ├── model.pkl                    # Serialized Passive Aggressive Classifier
 ├── vector.pkl                   # Serialized TF-IDF Vectorizer
-├── requirements.txt             # Python dependencies
+├── requirements.txt             # Project dependencies
 └── README.md                    # Project documentation
 ```
 
@@ -124,20 +136,28 @@ fake-news-detector/
 
 ## ⚡ Quickstart & Installation
 
-### 1. Clone the Repository
+### Option A: One-Click Automated Startup
 ```bash
-git clone https://github.com/bibhore-singh/fakebuster.git
-cd fakebuster
+# On Linux / macOS:
+chmod +x run.sh
+./run.sh
+
+# On Windows:
+run.bat
 ```
 
-### 2. Set Up Virtual Environment & Dependencies
+### Option B: Manual Setup
 ```bash
-python -m venv venv
-# On Windows:
-venv\Scripts\activate
-# On Linux / macOS:
-source venv/bin/activate
+# 1. Clone the repository
+git clone https://github.com/bibhore-singh/fakebuster.git
+cd fakebuster
 
+# 2. Create and activate virtual environment
+python -m venv venv
+# On Windows: venv\Scripts\activate
+# On Linux/macOS: source venv/bin/activate
+
+# 3. Install requirements
 pip install -r requirements.txt
 ```
 

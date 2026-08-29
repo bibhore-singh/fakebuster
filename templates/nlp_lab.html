@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live NLP Preprocessing &amp; Lemmatizer Lab — FAKEBUSTER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/media">Media Forensics</a>
+        <a href="/nlp-lab" class="active-link">NLP Lab</a>
+        <a href="/benchmark">Model Benchmarks</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-main">
+    <div class="studio-container full-width">
+      <div class="studio-header">
+        <span class="section-badge">Linguistic Tokenization &amp; Lemmatization</span>
+        <h1 class="studio-title">Interactive NLP Preprocessing Pipeline</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Explore how raw news text is sanitized, normalized, stripped of stopwords, and lemmatized through the exact 6-stage NLP pipeline before feature vectorization.</p>
+      </div>
+
+      <!-- Presets & Custom Input Bar -->
+      <div class="nlp-input-card">
+        <div class="nlp-input-header">
+          <label for="nlpTextInput">Input News Text or Select a Pre-Engineered Sample:</label>
+          <div class="nlp-preset-pills">
+            <button type="button" class="nlp-pill-btn active" onclick="loadNlpPreset('tabloid')">🚨 Viral Moon Base Conspiracy</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('nasa')">✅ NASA James Webb Discovery</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('election')">🚨 Rigged Voting Machine Hoax</button>
+            <button type="button" class="nlp-pill-btn" onclick="loadNlpPreset('climate')">✅ UN Renewable Energy Accord</button>
+          </div>
+        </div>
+
+        <textarea id="nlpTextInput" class="nlp-textarea" rows="3" oninput="runLiveNlpPipeline()">BREAKING: Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns!</textarea>
+
+        <div class="nlp-stats-bar">
+          <div class="nlp-stat-chip">
+            <span>Raw Character Count:</span>
+            <strong id="statRawChars">134</strong>
+          </div>
+          <div class="nlp-stat-chip">
+            <span>Raw Word Tokens:</span>
+            <strong id="statRawWords">17</strong>
+          </div>
+          <div class="nlp-stat-chip">
+            <span>Stopwords Eliminated:</span>
+            <strong id="statStopwords" class="text-danger">6 (35.3%)</strong>
+          </div>
+          <div class="nlp-stat-chip">
+            <span>Lemmatized Feature Tokens:</span>
+            <strong id="statLemmas" class="text-safe">11 Tokens</strong>
+          </div>
+          <div class="nlp-stat-chip">
+            <span>Vocabulary Reduction:</span>
+            <strong id="statReduction" class="text-cyan">35.3%</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6-Stage Interactive Visual Pipeline -->
+      <div class="nlp-pipeline-stages">
+        
+        <!-- Stage 1 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">01</div>
+            <div class="stage-title-wrap">
+              <h4>Raw Ingested Stream</h4>
+              <span>Unmodified user article string</span>
+            </div>
+            <span class="stage-tag">Stage 1</span>
+          </div>
+          <div class="stage-content-box" id="stage1Box">
+            BREAKING: Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns!
+          </div>
+        </div>
+
+        <!-- Stage 2 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">02</div>
+            <div class="stage-title-wrap">
+              <h4>Regex Sanitization</h4>
+              <span><code>re.sub(r'[^a-zA-Z\s]', '', text)</code></span>
+            </div>
+            <span class="stage-tag">Stage 2</span>
+          </div>
+          <div class="stage-content-box" id="stage2Box">
+            BREAKING Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns
+          </div>
+        </div>
+
+        <!-- Stage 3 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">03</div>
+            <div class="stage-title-wrap">
+              <h4>Case Folding (Lowercasing)</h4>
+              <span>Unified lexical case sensitivity</span>
+            </div>
+            <span class="stage-tag">Stage 3</span>
+          </div>
+          <div class="stage-content-box" id="stage3Box">
+            breaking secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns
+          </div>
+        </div>
+
+        <!-- Stage 4 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">04</div>
+            <div class="stage-title-wrap">
+              <h4>NLTK Stopwords Purge</h4>
+              <span>179 high-frequency uninformative words filtered</span>
+            </div>
+            <span class="stage-tag danger">Stage 4</span>
+          </div>
+          <div class="stage-content-box" id="stage4Box">
+            <span class="token keep">breaking</span>
+            <span class="token keep">secret</span>
+            <span class="token keep">government</span>
+            <span class="token keep">insiders</span>
+            <span class="token keep">admit</span>
+            <span class="token dropped">that</span>
+            <span class="token keep">confidential</span>
+            <span class="token keep">lunar</span>
+            <span class="token keep">frequencies</span>
+            <span class="token dropped">have</span>
+            <span class="token dropped">been</span>
+            <span class="token keep">manipulating</span>
+            <span class="token keep">global</span>
+            <span class="token keep">ocean</span>
+            <span class="token keep">tides</span>
+            <span class="token dropped">and</span>
+            <span class="token keep">weather</span>
+            <span class="token keep">patterns</span>
+          </div>
+        </div>
+
+        <!-- Stage 5 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">05</div>
+            <div class="stage-title-wrap">
+              <h4>WordNet Lemmatization</h4>
+              <span><code>WordNetLemmatizer().lemmatize(token)</code></span>
+            </div>
+            <span class="stage-tag safe">Stage 5</span>
+          </div>
+          <div class="stage-content-box" id="stage5Box">
+            <span class="lemma-token">breaking → <strong>break</strong></span>
+            <span class="lemma-token">secret → <strong>secret</strong></span>
+            <span class="lemma-token">government → <strong>government</strong></span>
+            <span class="lemma-token">insiders → <strong>insider</strong></span>
+            <span class="lemma-token">admit → <strong>admit</strong></span>
+            <span class="lemma-token">confidential → <strong>confidential</strong></span>
+            <span class="lemma-token">lunar → <strong>lunar</strong></span>
+            <span class="lemma-token">frequencies → <strong>frequency</strong></span>
+            <span class="lemma-token">manipulating → <strong>manipulate</strong></span>
+            <span class="lemma-token">global → <strong>global</strong></span>
+            <span class="lemma-token">ocean → <strong>ocean</strong></span>
+            <span class="lemma-token">tides → <strong>tide</strong></span>
+            <span class="lemma-token">weather → <strong>weather</strong></span>
+            <span class="lemma-token">patterns → <strong>pattern</strong></span>
+          </div>
+        </div>
+
+        <!-- Stage 6 -->
+        <div class="stage-card">
+          <div class="stage-header">
+            <div class="stage-num">06</div>
+            <div class="stage-title-wrap">
+              <h4>TF-IDF Feature Weights (N-grams)</h4>
+              <span>Sparse matrix coordinates into PAC Classifier</span>
+            </div>
+            <span class="stage-tag cyan">Stage 6</span>
+          </div>
+          <div class="stage-content-box" id="stage6Box">
+            <div class="tfidf-tokens-grid" id="tfidfTokensGrid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const nlpStopwordsSet = new Set([
+      'i','me','my','myself','we','our','ours','ourselves','you',"you're","you've","you'll","you'd",'your','yours',
+      'yourself','yourselves','he','him','his','himself','she',"she's",'her','hers','herself','it',"it's",'its',
+      'itself','they','them','their','theirs','themselves','what','which','who','whom','this','that',"that'll",
+      'these','those','am','is','are','was','were','be','been','being','have','has','had','having','do','does',
+      'did','doing','a','an','the','and','but','if','or','because','as','until','while','of','at','by','for',
+      'with','about','against','between','into','through','during','before','after','above','below','to','from',
+      'up','down','in','out','on','off','over','under','again','further','then','once','here','there','when',
+      'where','why','how','all','any','both','each','few','more','most','other','some','such','no','nor','not',
+      'only','own','same','so','than','too','very','s','t','can','will','just','don',"don't",'should',"should've",
+      'now','d','ll','m','o','re','ve','y','ain','aren',"aren't",'couldn',"couldn't",'didn',"didn't",'doesn',
+      "doesn't",'hadn',"hadn't",'hasn',"hasn't",'haven',"haven't",'isn',"isn't",'ma','mightn',"mightn't",
+      'mustn',"mustn't",'needn',"needn't",'shan',"shan't",'shouldn',"shouldn't",'wasn',"wasn't",'weren',
+      "weren't",'won',"won't",'wouldn',"wouldn't"
+    ]);
+
+    const lemmaLookup = {
+      'frequencies': 'frequency',
+      'tides': 'tide',
+      'insiders': 'insider',
+      'patterns': 'pattern',
+      'breaking': 'break',
+      'manipulating': 'manipulate',
+      'studies': 'study',
+      'galaxies': 'galaxy',
+      'atmospheres': 'atmosphere',
+      'molecules': 'molecule',
+      'confirmed': 'confirm',
+      'confidential': 'confidential',
+      'claims': 'claim',
+      'sources': 'source',
+      'insiders': 'insider',
+      'admits': 'admit',
+      'machines': 'machine',
+      'switched': 'switch',
+      'voters': 'voter',
+      'ballots': 'ballot',
+      'audits': 'audit',
+      'uncovered': 'uncover',
+      'nations': 'nation',
+      'signed': 'sign',
+      'agreements': 'agreement',
+      'emissions': 'emission',
+      'targets': 'target'
+    };
+
+    const nlpPresets = {
+      tabloid: "BREAKING: Secret government insiders admit that confidential lunar frequencies have been manipulating global ocean tides and weather patterns!",
+      nasa: "NASA’s James Webb Space Telescope has captured deep-field spectroscopic observations confirming atmospheric water vapor and carbon dioxide across exoplanet atmospheres.",
+      election: "EXCLUSIVE REPORT: Whistleblower alleges electronic voting machines automatically switched thousands of ballots during midnight system maintenance updates.",
+      climate: "Representatives from 45 nations finalized the International Renewable Energy Accord, establishing binding commitments to decrease industrial carbon emissions by 2030."
+    };
+
+    function loadNlpPreset(key) {
+      document.querySelectorAll('.nlp-pill-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('onclick').includes(key));
+      });
+      const txt = nlpPresets[key];
+      if (txt) {
+        document.getElementById('nlpTextInput').value = txt;
+        runLiveNlpPipeline();
+      }
+    }
+
+    function runLiveNlpPipeline() {
+      const rawText = document.getElementById('nlpTextInput').value;
+
+      // Stage 1
+      document.getElementById('stage1Box').textContent = rawText || '(Empty string)';
+
+      // Stage 2: Regex clean [^a-zA-Z\s]
+      const regexCleaned = rawText.replace(/[^a-zA-Z\s]/g, ' ').replace(/\s+/g, ' ').trim();
+      document.getElementById('stage2Box').textContent = regexCleaned || '(No alphabetic tokens)';
+
+      // Stage 3: Lowercase
+      const lowercased = regexCleaned.toLowerCase();
+      document.getElementById('stage3Box').textContent = lowercased || '(Empty)';
+
+      // Stage 4: Stopwords filter
+      const rawTokens = lowercased ? lowercased.split(' ').filter(t => t.length > 0) : [];
+      let keptTokens = [];
+      let droppedCount = 0;
+      let stage4Html = '';
+
+      rawTokens.forEach(t => {
+        if (nlpStopwordsSet.has(t)) {
+          droppedCount++;
+          stage4Html += `<span class="token dropped" title="NLTK Stopword: Dropped">${t}</span> `;
+        } else {
+          keptTokens.push(t);
+          stage4Html += `<span class="token keep">${t}</span> `;
+        }
+      });
+      document.getElementById('stage4Box').innerHTML = stage4Html || '(All tokens filtered)';
+
+      // Stage 5: Lemmatization
+      let lemmas = [];
+      let stage5Html = '';
+      keptTokens.forEach(t => {
+        const base = lemmaLookup[t] || (t.endsWith('s') && t.length > 3 ? t.slice(0, -1) : t);
+        lemmas.push(base);
+        stage5Html += `<span class="lemma-token">${t} → <strong>${base}</strong></span> `;
+      });
+      document.getElementById('stage5Box').innerHTML = stage5Html || '(No features)';
+
+      // Stage 6: TF-IDF Mocked Coordinates
+      const tfidfGrid = document.getElementById('tfidfTokensGrid');
+      let tfidfHtml = '';
+      const uniqueLemmas = [...new Set(lemmas)];
+      uniqueLemmas.forEach((lem, idx) => {
+        const tf = (lemmas.filter(l => l === lem).length / (lemmas.length || 1)).toFixed(3);
+        const pseudoIdf = (1.5 + (lem.length % 5) * 0.45).toFixed(2);
+        const weight = (tf * pseudoIdf).toFixed(3);
+        tfidfHtml += `
+          <div class="tfidf-item">
+            <div class="tf-word">${lem}</div>
+            <div class="tf-meta">TF: ${tf} · IDF: ${pseudoIdf}</div>
+            <div class="tf-bar"><div class="tf-fill" style="width: ${Math.min(100, weight * 160)}%;"></div></div>
+            <div class="tf-val">w = ${weight}</div>
+          </div>
+        `;
+      });
+      tfidfGrid.innerHTML = tfidfHtml || '<span class="text-muted">No TF-IDF tokens generated</span>';
+
+      // Stats
+      document.getElementById('statRawChars').textContent = rawText.length;
+      document.getElementById('statRawWords').textContent = rawTokens.length;
+      const dropPct = rawTokens.length > 0 ? ((droppedCount / rawTokens.length) * 100).toFixed(1) : 0;
+      document.getElementById('statStopwords').textContent = `${droppedCount} (${dropPct}%)`;
+      document.getElementById('statLemmas').textContent = `${lemmas.length} Tokens`;
+      document.getElementById('statReduction').textContent = `${dropPct}%`;
+    }
+
+    // Auto initialize
+    window.addEventListener('DOMContentLoaded', () => {
+      runLiveNlpPipeline();
+    });
+  </script>
+</body>
+</html>

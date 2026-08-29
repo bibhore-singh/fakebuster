@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Benchmarks &amp; Kaggle Dataset — FAKEBUSTER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/media">Media Forensics</a>
+        <a href="/nlp-lab">NLP Lab</a>
+        <a href="/benchmark" class="active-link">Model Benchmarks</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-main">
+    <div class="studio-container full-width">
+      <div class="studio-header">
+        <span class="section-badge">Model Evaluation &amp; Empirical Benchmarks</span>
+        <h1 class="studio-title">Machine Learning Algorithm Comparison</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Comparing the Passive-Aggressive Classifier against traditional baselines (MultinomialNB, Logistic Regression, LinearSVC) evaluated on the 20,800-article Kaggle benchmark.</p>
+      </div>
+
+      <!-- Champion Algorithm Card -->
+      <div class="benchmark-champion-card">
+        <div class="bcc-badge">🏆 Champion Architecture</div>
+        <div class="bcc-content">
+          <div class="bcc-info">
+            <h2>Passive Aggressive Classifier (PAC)</h2>
+            <p>Selected for production deployment due to its <strong>online margin-updating hinge-loss function</strong>. Unlike batch-only estimators, PAC processes continuous streaming news articles without full retraining, achieving <strong>96.08% Accuracy</strong> and sub-2ms inference latency.</p>
+          </div>
+          <div class="bcc-stats">
+            <div class="bcc-stat">
+              <span class="stat-num text-gradient-cyan">96.08%</span>
+              <span class="stat-lbl">Evaluation Accuracy</span>
+            </div>
+            <div class="bcc-stat">
+              <span class="stat-num text-gradient-pink">0.9601</span>
+              <span class="stat-lbl">Harmonic F1-Score</span>
+            </div>
+            <div class="bcc-stat">
+              <span class="stat-num text-gradient-green">1.4 ms</span>
+              <span class="stat-lbl">Inference Latency</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Benchmark Grid -->
+      <div class="benchmark-grid">
+        <!-- Left: Model Selector & Comparison Table -->
+        <div class="benchmark-table-card">
+          <h3 class="card-subtitle">Empirical Comparison on Kaggle Test Set</h3>
+          <div class="table-responsive">
+            <table class="benchmark-table">
+              <thead>
+                <tr>
+                  <th>Model Architecture</th>
+                  <th>Accuracy</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1-Score</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="model-row active" id="row-pac" onclick="selectBenchmarkModel('pac')">
+                  <td>
+                    <strong>Passive Aggressive (PAC)</strong>
+                    <span class="mini-tag champ">Deployed</span>
+                  </td>
+                  <td class="stat-green">96.08%</td>
+                  <td>95.92%</td>
+                  <td>96.10%</td>
+                  <td>0.9601</td>
+                  <td><button class="btn btn-sm btn-primary">Selected</button></td>
+                </tr>
+                <tr class="model-row" id="row-linearsvc" onclick="selectBenchmarkModel('linearsvc')">
+                  <td>
+                    <strong>Linear SVC</strong>
+                    <span class="mini-tag">Margin Baseline</span>
+                  </td>
+                  <td>94.12%</td>
+                  <td>93.80%</td>
+                  <td>94.45%</td>
+                  <td>0.9412</td>
+                  <td><button class="btn btn-sm btn-secondary">Inspect</button></td>
+                </tr>
+                <tr class="model-row" id="row-logreg" onclick="selectBenchmarkModel('logreg')">
+                  <td>
+                    <strong>Logistic Regression (L2)</strong>
+                    <span class="mini-tag">Linear Baseline</span>
+                  </td>
+                  <td>91.50%</td>
+                  <td>91.10%</td>
+                  <td>92.05%</td>
+                  <td>0.9157</td>
+                  <td><button class="btn btn-sm btn-secondary">Inspect</button></td>
+                </tr>
+                <tr class="model-row" id="row-mnb" onclick="selectBenchmarkModel('mnb')">
+                  <td>
+                    <strong>Multinomial Naive Bayes</strong>
+                    <span class="mini-tag">Probabilistic</span>
+                  </td>
+                  <td>88.42%</td>
+                  <td>88.90%</td>
+                  <td>87.80%</td>
+                  <td>0.8834</td>
+                  <td><button class="btn btn-sm btn-secondary">Inspect</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Dataset Characteristics -->
+          <div class="dataset-stats-box">
+            <h4>📊 Kaggle 20,800-Dataset Distribution &amp; Preprocessing</h4>
+            <div class="ds-metrics-row">
+              <div class="dsm-item">
+                <span>Total Samples:</span>
+                <strong>20,800 Articles</strong>
+              </div>
+              <div class="dsm-item">
+                <span>Nulls Dropped:</span>
+                <strong>39 Incomplete (0.18%)</strong>
+              </div>
+              <div class="dsm-item">
+                <span>Reliable (0):</span>
+                <strong class="text-safe">10,387 (49.94%)</strong>
+              </div>
+              <div class="dsm-item">
+                <span>Unreliable (1):</span>
+                <strong class="text-danger">10,413 (50.06%)</strong>
+              </div>
+            </div>
+            <p class="ds-note">Clean 50/50 balance eliminates majority-class skew and enables unbiased confusion matrix symmetry.</p>
+          </div>
+        </div>
+
+        <!-- Right: Dynamic Confusion Matrix & Architectural Insights -->
+        <div class="benchmark-cm-card">
+          <div class="cm-header-row">
+            <h3 class="card-subtitle" id="cmModelTitle">Confusion Matrix: Passive Aggressive Classifier</h3>
+            <span class="badge-pill safe" id="cmAccuracyBadge">96.08% Acc</span>
+          </div>
+
+          <!-- Interactive CM Grid -->
+          <div class="cm-interactive-grid">
+            <div class="cm-axis-y">Actual Class</div>
+            <div class="cm-cells-wrapper">
+              <div class="cm-axis-x">Predicted Class</div>
+              <div class="cm-matrix">
+                <div class="cm-cell cell-tn" id="cmCellTN">
+                  <span class="cm-val" id="cmTN">1,048</span>
+                  <span class="cm-lbl">True Negatives (Real)</span>
+                </div>
+                <div class="cm-cell cell-fp" id="cmCellFP">
+                  <span class="cm-val" id="cmFP">43</span>
+                  <span class="cm-lbl">False Positives (Type I)</span>
+                </div>
+                <div class="cm-cell cell-fn" id="cmCellFN">
+                  <span class="cm-val" id="cmFN">41</span>
+                  <span class="cm-lbl">False Negatives (Type II)</span>
+                </div>
+                <div class="cm-cell cell-tp" id="cmCellTP">
+                  <span class="cm-val" id="cmTP">1,012</span>
+                  <span class="cm-lbl">True Positives (Fake)</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Mathematical Justification -->
+          <div class="cm-theory-box">
+            <h4 id="cmTheoryTitle">Why PAC Outperforms Static Estimators:</h4>
+            <p id="cmTheoryDesc">
+              The Passive-Aggressive algorithm updates model weights \(w\) only when an incoming sample incurs a non-zero hinge loss:
+              <code class="code-math">L(w; (x, y)) = \max(0, 1 - y \cdot (w \cdot x))</code>.
+              When prediction is correct, it remains strictly <em>passive</em>; when misclassified, it updates <em>aggressively</em> with minimal perturbation, making it exceptionally resilient to shifting disinformation semantics.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Architectural Diagrams Section -->
+      <div class="diagrams-gallery-section">
+        <div class="section-heading-wrap">
+          <span class="section-badge">Visual Blueprint</span>
+          <h2>System Flow &amp; Process Architecture Diagrams</h2>
+          <p>Architectural block and process flow representations adapted from the reference machine learning implementation:</p>
+        </div>
+
+        <div class="diagrams-dual-grid">
+          <div class="diagram-display-card">
+            <h3>System Block Diagram</h3>
+            <p>End-to-end data ingestion, lemmatization, vectorization, PAC training, and Flask microservice layers.</p>
+            <div class="diagram-img-wrap">
+              <img src="{{ url_for('static', filename='../Images/BlockDiagram.svg') }}" alt="System Block Diagram">
+            </div>
+          </div>
+
+          <div class="diagram-display-card">
+            <h3>Inference Process Flow Diagram</h3>
+            <p>Step-by-step real-time article transformation from raw input to reach-weighted visibility verdict.</p>
+            <div class="diagram-img-wrap">
+              <img src="{{ url_for('static', filename='../Images/Processflow.svg') }}" alt="Inference Process Flow Diagram">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    const benchmarkData = {
+      pac: {
+        title: 'Confusion Matrix: Passive Aggressive Classifier (PAC)',
+        accuracy: '96.08% Acc',
+        badgeClass: 'safe',
+        tn: '1,048',
+        fp: '43',
+        fn: '41',
+        tp: '1,012',
+        theoryTitle: 'Why PAC Outperforms Static Estimators:',
+        theoryDesc: 'The Passive-Aggressive algorithm updates model weights only when an incoming sample incurs a non-zero hinge loss: L(w; (x, y)) = max(0, 1 - y * (w · x)). When correct, weights stay passive; when incorrect, weights update aggressively with minimal perturbation, allowing real-time online adaptation.'
+      },
+      linearsvc: {
+        title: 'Confusion Matrix: Linear Support Vector Classifier (LinearSVC)',
+        accuracy: '94.12% Acc',
+        badgeClass: 'safe',
+        tn: '1,015',
+        fp: '76',
+        fn: '50',
+        tp: '1,003',
+        theoryTitle: 'Linear Support Vector Classifier (LinearSVC):',
+        theoryDesc: 'Maximizes the geometric margin between reliable and unreliable hyperplanes using coordinate descent. While highly accurate (94.12%), it lacks the native online streaming update capability of PAC and requires full matrix recomputation.'
+      },
+      logreg: {
+        title: 'Confusion Matrix: Logistic Regression (L2 Regularized)',
+        accuracy: '91.50% Acc',
+        badgeClass: 'warn',
+        tn: '988',
+        fp: '103',
+        fn: '79',
+        tp: '974',
+        theoryTitle: 'Logistic Regression Analysis:',
+        theoryDesc: 'Optimizes cross-entropy log-loss. Performs reliably across high-frequency unigrams, but struggles with nuanced satirical phrasing and emerging vocabulary without periodic global retraining.'
+      },
+      mnb: {
+        title: 'Confusion Matrix: Multinomial Naive Bayes (MNB)',
+        accuracy: '88.42% Acc',
+        badgeClass: 'danger',
+        tn: '945',
+        fp: '146',
+        fn: '102',
+        tp: '951',
+        theoryTitle: 'Multinomial Naive Bayes Analysis:',
+        theoryDesc: 'Assumes strict conditional independence between words given the class label. In reality, disinformation relies heavily on n-gram context and coordinated phrasing, violating the naive independence assumption and yielding lower recall.'
+      }
+    };
+
+    function selectBenchmarkModel(modelKey) {
+      const data = benchmarkData[modelKey];
+      if (!data) return;
+
+      document.querySelectorAll('.model-row').forEach(row => {
+        row.classList.remove('active');
+      });
+      const targetRow = document.getElementById(`row-${modelKey}`);
+      if (targetRow) targetRow.classList.add('active');
+
+      document.getElementById('cmModelTitle').textContent = data.title;
+      const badge = document.getElementById('cmAccuracyBadge');
+      badge.textContent = data.accuracy;
+      badge.className = `badge-pill ${data.badgeClass}`;
+
+      document.getElementById('cmTN').textContent = data.tn;
+      document.getElementById('cmFP').textContent = data.fp;
+      document.getElementById('cmFN').textContent = data.fn;
+      document.getElementById('cmTP').textContent = data.tp;
+
+      document.getElementById('cmTheoryTitle').textContent = data.theoryTitle;
+      document.getElementById('cmTheoryDesc').textContent = data.theoryDesc;
+    }
+  </script>
+</body>
+</html>

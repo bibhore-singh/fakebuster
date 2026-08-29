@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cmBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="520" rx="16" fill="url(#cmBg)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="400" y="42" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="22" font-weight="800" fill="#fff" letter-spacing="1">
+    EVALUATION CONFUSION MATRIX &amp; PERFORMANCE
+  </text>
+  <text x="400" y="66" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="13" fill="#94a3b8">
+    Passive-Aggressive Classifier Tested on Kaggle Evaluation Benchmark (Test Size: 2,144 articles)
+  </text>
+
+  <!-- Confusion Matrix Box -->
+  <!-- Header Labels -->
+  <text x="320" y="110" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#38bdf8">Predicted Real (0)</text>
+  <text x="490" y="110" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#f43f5e">Predicted Fake (1)</text>
+
+  <!-- Row 1: Actual Real -->
+  <text x="210" y="195" text-anchor="end" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#38bdf8">Actual Real (0)</text>
+  
+  <!-- True Negative (TN) -->
+  <rect x="235" y="130" width="170" height="110" rx="8" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="2"/>
+  <text x="320" y="180" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" fill="#34d399">1,048</text>
+  <text x="320" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#a7f3d0">True Negative (48.9%)</text>
+
+  <!-- False Positive (FP) -->
+  <rect x="420" y="130" width="170" height="110" rx="8" fill="rgba(244, 63, 94, 0.1)" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="505" y="180" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" fill="#fda4af">43</text>
+  <text x="505" y="210" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fda4af">False Positive (2.0%)</text>
+
+  <!-- Row 2: Actual Fake -->
+  <text x="210" y="325" text-anchor="end" font-family="'Outfit', sans-serif" font-size="13" font-weight="700" fill="#f43f5e">Actual Fake (1)</text>
+
+  <!-- False Negative (FN) -->
+  <rect x="235" y="255" width="170" height="110" rx="8" fill="rgba(244, 63, 94, 0.1)" stroke="#f43f5e" stroke-width="1.5" stroke-dasharray="4,4"/>
+  <text x="320" y="305" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" fill="#fda4af">41</text>
+  <text x="320" y="335" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#fda4af">False Negative (1.9%)</text>
+
+  <!-- True Positive (TP) -->
+  <rect x="420" y="255" width="170" height="110" rx="8" fill="rgba(6, 182, 212, 0.2)" stroke="#06b6d4" stroke-width="2"/>
+  <text x="505" y="305" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="28" font-weight="800" fill="#38bdf8">1,012</text>
+  <text x="505" y="335" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#bae6fd">True Positive (47.2%)</text>
+
+  <!-- Bottom Metric Summary Cards -->
+  <rect x="60" y="395" width="150" height="85" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="135" y="423" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" fill="#94a3b8">ACCURACY</text>
+  <text x="135" y="456" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="24" font-weight="800" fill="#34d399">96.08%</text>
+
+  <rect x="230" y="395" width="150" height="85" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="305" y="423" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" fill="#94a3b8">PRECISION</text>
+  <text x="305" y="456" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="24" font-weight="800" fill="#38bdf8">95.92%</text>
+
+  <rect x="400" y="395" width="150" height="85" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="475" y="423" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" fill="#94a3b8">RECALL</text>
+  <text x="475" y="456" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="24" font-weight="800" fill="#c084fc">96.10%</text>
+
+  <rect x="570" y="395" width="170" height="85" rx="8" fill="#1e293b" stroke="#334155"/>
+  <text x="655" y="423" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="11" font-weight="700" fill="#94a3b8">F1-SCORE (HARMONIC)</text>
+  <text x="655" y="456" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="24" font-weight="800" fill="#fbbf24">0.9601</text>
+</svg>

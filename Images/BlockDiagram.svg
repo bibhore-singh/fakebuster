@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#090d16"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="boxGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#06b6d4" />
+    </marker>
+  </defs>
+
+  <!-- Background Canvas -->
+  <rect width="1000" height="620" rx="16" fill="url(#bgGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Title Banner -->
+  <text x="500" y="45" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="24" font-weight="800" fill="#fff" letter-spacing="1">
+    FAKEBUSTER — SYSTEM ARCHITECTURE BLOCK DIAGRAM
+  </text>
+  <text x="500" y="70" text-anchor="middle" font-family="'Outfit', system-ui, sans-serif" font-size="13" fill="#94a3b8" letter-spacing="0.5">
+    Adapted from Machine Learning &amp; NLP Pipeline (Passive-Aggressive Model &amp; TF-IDF Vectorization)
+  </text>
+
+  <!-- Stage 1: Data Ingestion & Imputation -->
+  <rect x="50" y="110" width="260" height="210" rx="12" fill="url(#boxGrad1)" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="50" y="110" width="260" height="34" rx="12" fill="#0284c7" opacity="0.3"/>
+  <text x="180" y="132" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#38bdf8">1. DATA INGESTION &amp; EDA</text>
+  
+  <rect x="70" y="160" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="184" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Kaggle Dataset (20,800 rows)</text>
+
+  <rect x="70" y="210" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="234" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Missing Value Drop (.dropna())</text>
+
+  <rect x="70" y="260" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="284" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Class Balance: 50% / 50%</text>
+
+  <!-- Arrow 1 -> 2 -->
+  <line x1="310" y1="215" x2="365" y2="215" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 2: NLP Preprocessing Pipeline -->
+  <rect x="370" y="110" width="260" height="210" rx="12" fill="url(#boxGrad1)" stroke="#818cf8" stroke-width="1.5"/>
+  <rect x="370" y="110" width="260" height="34" rx="12" fill="#4f46e5" opacity="0.3"/>
+  <text x="500" y="132" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#818cf8">2. NLP PREPROCESSING</text>
+
+  <rect x="390" y="160" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="184" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Regex Cleaning [^a-zA-Z]</text>
+
+  <rect x="390" y="210" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="234" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">NLTK Stopwords Purge (179)</text>
+
+  <rect x="390" y="260" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="284" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">WordNet Lemmatization</text>
+
+  <!-- Arrow 2 -> 3 -->
+  <line x1="630" y1="215" x2="685" y2="215" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 3: Feature Extraction & Vectorizer -->
+  <rect x="690" y="110" width="260" height="210" rx="12" fill="url(#boxGrad1)" stroke="#ec4899" stroke-width="1.5"/>
+  <rect x="690" y="110" width="260" height="34" rx="12" fill="#db2777" opacity="0.3"/>
+  <text x="820" y="132" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#ec4899">3. VECTOR EXTRACTION</text>
+
+  <rect x="710" y="160" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="184" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">TF-IDF Vectorizer (N-grams)</text>
+
+  <rect x="710" y="210" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="234" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Sublinear TF Scaling (1+log)</text>
+
+  <rect x="710" y="260" width="220" height="38" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="284" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Serialized: vector.pkl</text>
+
+  <!-- Arrow down to Stage 4 -->
+  <path d="M 820 320 L 820 365 L 820 375" fill="none" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 4: Passive Aggressive Classifier -->
+  <rect x="690" y="380" width="260" height="200" rx="12" fill="url(#boxGrad1)" stroke="#10b981" stroke-width="1.5"/>
+  <rect x="690" y="380" width="260" height="34" rx="12" fill="#059669" opacity="0.3"/>
+  <text x="820" y="402" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#10b981">4. MODEL TRAINING (PAC)</text>
+
+  <rect x="710" y="425" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="448" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Hinge Loss Optimization</text>
+
+  <rect x="710" y="470" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="493" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Evaluation: 96% Acc (F1: 0.96)</text>
+
+  <rect x="710" y="515" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="820" y="538" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Serialized: model.pkl</text>
+
+  <!-- Arrow 4 -> 5 -->
+  <line x1="690" y1="480" x2="635" y2="480" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 5: Real-Time Web & API Layer -->
+  <rect x="370" y="380" width="260" height="200" rx="12" fill="url(#boxGrad1)" stroke="#38bdf8" stroke-width="1.5"/>
+  <rect x="370" y="380" width="260" height="34" rx="12" fill="#0284c7" opacity="0.3"/>
+  <text x="500" y="402" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#38bdf8">5. PRODUCTION SERVER</text>
+
+  <rect x="390" y="425" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="448" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Flask Application (app.py)</text>
+
+  <rect x="390" y="470" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="493" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">REST API: POST /api/predict</text>
+
+  <rect x="390" y="515" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="500" y="538" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Multimodal &amp; OCR Hook</text>
+
+  <!-- Arrow 5 -> 6 -->
+  <line x1="370" y1="480" x2="315" y2="480" stroke="#06b6d4" stroke-width="2.5" marker-end="url(#arrow)"/>
+
+  <!-- Stage 6: Source Aggregation & Visibility Action -->
+  <rect x="50" y="380" width="260" height="200" rx="12" fill="url(#boxGrad1)" stroke="#f59e0b" stroke-width="1.5"/>
+  <rect x="50" y="380" width="260" height="34" rx="12" fill="#d97706" opacity="0.3"/>
+  <text x="180" y="402" text-anchor="middle" font-family="'Outfit', sans-serif" font-size="14" font-weight="700" fill="#f59e0b">6. SOURCE VISIBILITY</text>
+
+  <rect x="70" y="425" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="448" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Rolling Source History Tracker</text>
+
+  <rect x="70" y="470" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="493" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Algorithmic Reach (0.05x-1.0x)</text>
+
+  <rect x="70" y="515" width="220" height="36" rx="6" fill="#0f172a" stroke="#334155"/>
+  <text x="180" y="538" text-anchor="middle" font-family="'JetBrains Mono', monospace" font-size="11" fill="#e2e8f0">Sensationalism Suppression</text>
+</svg>
