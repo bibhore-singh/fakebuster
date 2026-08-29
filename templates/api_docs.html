@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation — FAKEBUSTER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs" class="active-link">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-main">
+    <div class="studio-container">
+      <div class="studio-header">
+        <span class="section-badge">Developer Integration</span>
+        <h1 class="studio-title">REST API Specifications &amp; Code Examples</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Integrate FAKEBUSTER's Passive Aggressive Classifier and Source Credibility Engine into social feeds or bots.</p>
+      </div>
+
+      <!-- Endpoint 1: POST /api/predict -->
+      <div class="api-doc-card">
+        <div class="api-endpoint-badge">
+          <span class="method-tag post">POST</span>
+          <code class="endpoint-url">/api/predict</code>
+        </div>
+        <p class="api-summary">Classifies news text as Reliable or Unreliable and calculates dynamic source visibility reach weight.</p>
+
+        <h4>Request Payload (JSON)</h4>
+        <pre class="code-block"><code>{
+  "title": "NASA James Webb Space Telescope Reveals Ancient Galaxies",
+  "author": "Astrophysical Journal (Dr. Sarah Jenkins)",
+  "text": "Astronomers have verified unprecedented clusters of early galaxies using infrared spectroscopy..."
+}</code></pre>
+
+        <h4>Response Payload (JSON)</h4>
+        <pre class="code-block"><code>{
+  "status": "success",
+  "prediction": "Reliable (Authentic News)",
+  "is_fake": false,
+  "confidence": 96.2,
+  "visibility_weight": 0.98,
+  "author": "Astrophysical Journal (Dr. Sarah Jenkins)"
+}</code></pre>
+
+        <h4>cURL Example</h4>
+        <pre class="code-block"><code>curl -X POST http://localhost:5000/api/predict \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Breaking News...", "author":"Reuters", "text":"Article content here..."}'</code></pre>
+
+        <h4>Python Example</h4>
+        <pre class="code-block"><code>import requests
+
+payload = {
+    "title": "NASA Telescope Confirms Early Galaxies",
+    "author": "Dr. Sarah Jenkins",
+    "text": "Astronomers published peer-reviewed findings..."
+}
+response = requests.post("http://localhost:5000/api/predict", json=payload)
+print(response.json())</code></pre>
+      </div>
+
+      <!-- Endpoint 2: GET /api/source/<name> -->
+      <div class="api-doc-card" style="margin-top: 24px;">
+        <div class="api-endpoint-badge">
+          <span class="method-tag get">GET</span>
+          <code class="endpoint-url">/api/source/{source_name}</code>
+        </div>
+        <p class="api-summary">Queries the source credibility registry to retrieve historical trust score and algorithmic feed action.</p>
+
+        <h4>Response Example</h4>
+        <pre class="code-block"><code>{
+  "found": true,
+  "source": "reuters",
+  "status": "Safe (1.0x)",
+  "tier": "Tier 1 (High Credibility)",
+  "trust_score": 0.98
+}</code></pre>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

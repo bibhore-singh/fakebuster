@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Batch Prediction Explorer — FAKEBUSTER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/batch" class="active-link">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-main">
+    <div class="studio-container full-width">
+      <div class="studio-header">
+        <span class="section-badge">Evaluation Dataset Results</span>
+        <h1 class="studio-title">Batch Test Dataset Predictions (test.csv)</h1>
+        <p class="studio-subtext">Passive Aggressive Classifier verdicts and source visibility multipliers across unseen benchmark articles.</p>
+      </div>
+
+      <!-- Stats Row -->
+      <div class="batch-stats-row">
+        <div class="batch-stat-card">
+          <span class="stat-big-val">{{ predictions|length }}</span>
+          <span class="stat-small-lbl">Articles Evaluated</span>
+        </div>
+        <div class="batch-stat-card">
+          <span class="stat-big-val green">{{ predictions|selectattr('is_fake', 'equalto', '0')|list|length }}</span>
+          <span class="stat-small-lbl">Reliable (Authentic)</span>
+        </div>
+        <div class="batch-stat-card">
+          <span class="stat-big-val rose">{{ predictions|selectattr('is_fake', 'equalto', '1')|list|length }}</span>
+          <span class="stat-small-lbl">Unreliable (Fake News)</span>
+        </div>
+        <div class="batch-stat-card">
+          <a href="/download/predictions" class="btn btn-primary btn-sm">
+            <span>📥 Export Predictions CSV</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Search & Filters -->
+      <div class="table-controls-row">
+        <div class="search-box-wrap">
+          <input type="text" id="tableSearch" placeholder="Search by headline or author..." onkeyup="filterBatchTable()">
+        </div>
+        <div class="filter-pills">
+          <button class="filter-btn active" onclick="setFilter('all')">All ({{ predictions|length }})</button>
+          <button class="filter-btn" onclick="setFilter('reliable')">✅ Reliable Only</button>
+          <button class="filter-btn" onclick="setFilter('unreliable')">🚨 Unreliable Only</button>
+        </div>
+      </div>
+
+      <!-- Batch Predictions Table -->
+      <div class="batch-table-card">
+        <div class="table-responsive">
+          <table class="batch-data-table" id="batchTable">
+            <thead>
+              <tr>
+                <th width="60">ID</th>
+                <th>Headline / Story Title</th>
+                <th>Author / Source</th>
+                <th width="160">PAC Verdict</th>
+                <th width="110">Confidence</th>
+                <th width="120">Feed Reach</th>
+                <th>Salient N-Grams</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for p in predictions %}
+              <tr class="prediction-row {% if p.is_fake == '1' %}is-fake-row{% else %}is-real-row{% endif %}" data-fake="{{ p.is_fake }}">
+                <td class="id-cell"><code>#{{ p.id }}</code></td>
+                <td class="title-cell"><strong>{{ p.title }}</strong></td>
+                <td class="author-cell">{{ p.author }}</td>
+                <td>
+                  <span class="verdict-pill-mini {% if p.is_fake == '1' %}fake-mini{% else %}real-mini{% endif %}">
+                    {% if p.is_fake == '1' %}🚨 Unreliable{% else %}✅ Reliable{% endif %}
+                  </span>
+                </td>
+                <td class="conf-cell">
+                  <span class="conf-val">{{ p.confidence }}%</span>
+                </td>
+                <td class="weight-cell">
+                  <span class="weight-pill {% if p.is_fake == '1' %}throttled{% else %}safe{% endif %}">
+                    {{ p.visibility_weight }}x
+                  </span>
+                </td>
+                <td class="tokens-cell">
+                  <span class="token-snippet">{{ p.salient_tokens }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    let activeFilter = 'all';
+
+    function setFilter(filterType) {
+      activeFilter = filterType;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.textContent.toLowerCase().includes(filterType));
+      });
+      filterBatchTable();
+    }
+
+    function filterBatchTable() {
+      const q = document.getElementById('tableSearch').value.toLowerCase();
+      const rows = document.querySelectorAll('#batchTable tbody tr');
+
+      rows.forEach(r => {
+        const isFake = r.getAttribute('data-fake') === '1';
+        const text = r.textContent.toLowerCase();
+        const matchesQuery = text.includes(q);
+        
+        let matchesFilter = true;
+        if (activeFilter === 'reliable') matchesFilter = !isFake;
+        if (activeFilter === 'unreliable') matchesFilter = isFake;
+
+        r.style.display = (matchesQuery && matchesFilter) ? '' : 'none';
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Source Credibility Registry — FAKEBUSTER</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources" class="active-link">Source Registry</a>
+        <a href="/docs">API Docs</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-main">
+    <div class="studio-container">
+      <div class="studio-header">
+        <span class="section-badge">Multi-Article Track Record</span>
+        <h1 class="studio-title">Source Credibility Directory &amp; Registry</h1>
+        <p class="studio-subtext">Aggregated publisher reputation scores that dictate social media distribution reach weights.</p>
+      </div>
+
+      <!-- Quick Domain Search Box -->
+      <div class="source-search-card">
+        <h3>🔍 Instant Domain Reputation Lookup</h3>
+        <p>Type any media publisher, news website, or telegram outlet to check its algorithmic standing:</p>
+        <div class="lookup-input-row">
+          <input type="text" id="domainInput" placeholder="e.g. reuters, nature, viralhoaxnews, bbc...">
+          <button class="btn btn-primary btn-sm" onclick="checkSourceLive()">Verify Source Standing</button>
+        </div>
+        <div class="lookup-result-box" id="lookupResult" style="display: none;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- Known Publishers Registry Grid -->
+      <div class="registry-section">
+        <h3 class="registry-heading">Indexed Publishers &amp; Algorithmic Safety Tiers</h3>
+        <div class="sources-grid">
+          {% for name, s in sources.items() %}
+          <div class="source-card {% if s.trust >= 0.85 %}tier-1{% elif s.trust >= 0.5 %}tier-2{% else %}tier-3{% endif %}">
+            <div class="source-card-top">
+              <span class="source-tier-pill">{{ s.tier }}</span>
+              <span class="source-trust-val">{{ (s.trust * 100)|round }}% Trust</span>
+            </div>
+            <h4 class="source-card-title">{{ name|title }}</h4>
+            <div class="source-status-row">
+              <span>Algorithmic Feed Action:</span>
+              <strong>{{ s.status }}</strong>
+            </div>
+            <div class="source-meter-track">
+              <div class="source-meter-fill" style="width: {{ s.trust * 100 }}%;"></div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    function checkSourceLive() {
+      const name = document.getElementById('domainInput').value.trim();
+      if (!name) return;
+
+      fetch(`/api/source/${encodeURIComponent(name)}`)
+        .then(res => res.json())
+        .then(data => {
+          const box = document.getElementById('lookupResult');
+          box.style.display = 'block';
+          const isHigh = data.trust_score >= 0.85;
+          const isLow = data.trust_score < 0.4;
+          
+          box.className = `lookup-result-box ${isLow ? 'danger-box' : (isHigh ? 'safe-box' : 'warn-box')}`;
+          box.innerHTML = `
+            <div class="res-head">
+              <strong>${data.source}</strong> · ${data.tier}
+            </div>
+            <p>Trust Score: <strong>${Math.round(data.trust_score * 100)}%</strong> | Status: <strong>${data.status}</strong></p>
+          `;
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  </script>
+</body>
+</html>

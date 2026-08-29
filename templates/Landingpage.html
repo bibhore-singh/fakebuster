@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FAKEBUSTER — AI-Powered Fake News Detection System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <!-- Ambient background glow -->
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict">Prediction Studio</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs">API Docs</a>
+        <a href="/predict" class="btn btn-primary btn-sm">Launch Predictor ⚡</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-container">
+      <div class="hero-tag">
+        <span class="status-dot"></span>
+        <span>Passive Aggressive Classifier · 96% Accuracy</span>
+      </div>
+      <h1 class="hero-title">
+        FAKEBUSTER <br>
+        <span class="gradient-text">AI-Powered Fake News Detection</span>
+      </h1>
+      <p class="hero-tagline" style="font-size: 1.35rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 14px; letter-spacing: -0.01em;">
+        “Bust the Fake. Find the Facts.”
+      </p>
+      <p class="hero-subtitle">
+        An intelligent NLP system designed to classify news authenticity and compute source-level visibility weights to mitigate the viral spread of online misinformation across social platforms.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/predict" class="btn btn-primary btn-lg">
+          <span>Scan an Article Now</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#model" class="btn btn-outline btn-lg">
+          <span>Explore PAC Model</span>
+        </a>
+      </div>
+
+      <!-- Quick Metrics Grid -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-val">96%</div>
+          <div class="metric-label">Evaluation Accuracy</div>
+          <p class="metric-desc">Rigorous testing on Kaggle news verification benchmark.</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">PAC</div>
+          <div class="metric-label">Passive Aggressive Model</div>
+          <p class="metric-desc">Online learning optimized for rapid text streams.</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">TF-IDF</div>
+          <div class="metric-label">N-Gram Vectorizer</div>
+          <p class="metric-desc">Sublinear term frequency mapping for unigrams and bigrams.</p>
+        </div>
+        <div class="metric-card">
+          <div class="metric-val">Source-Level</div>
+          <div class="metric-label">Visibility Weights</div>
+          <p class="metric-desc">Tolerates single-article noise by aggregating publisher history.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Problem Definition Section -->
+  <section id="problem" class="content-section">
+    <div class="section-container">
+      <div class="section-badge">Core Innovation</div>
+      <h2 class="section-heading">The Problem &amp; Our Source Weighting Approach</h2>
+      <p class="section-subtext">
+        Most fake news detectors analyze articles in total isolation, leaving them vulnerable to single-article misclassifications. FAKEBUSTER shifts the paradigm toward <strong>Source Credibility Identification</strong>.
+      </p>
+
+      <div class="problem-solution-grid">
+        <div class="box-card problem-box">
+          <div class="card-icon">⚠️</div>
+          <h3>Traditional Article Classification</h3>
+          <p>Treats every piece of content in a vacuum. A single ambiguous or satiric article can yield a false positive, frustrating legitimate authors while nimble disinformation operations constantly cycle through disposable domains.</p>
+        </div>
+        <div class="box-card solution-box">
+          <div class="card-icon">🎯</div>
+          <h3>Source-Level Aggregation</h3>
+          <p>By monitoring the track record of publishing sources over multiple articles, we broaden our article misclassification tolerance. Once a source exhibits a systematic pattern of producing fake news, its content visibility is throttled across social feeds.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Model & Pipeline Section -->
+  <section id="model" class="content-section">
+    <div class="section-container">
+      <div class="section-badge">Algorithmic Architecture</div>
+      <h2 class="section-heading">Why the Passive Aggressive Classifier?</h2>
+      <p class="section-subtext">
+        The Passive Aggressive Classifier (PAC) is a margin-based online learning algorithm specifically tailored for massive, evolving text data.
+      </p>
+
+      <div class="pac-architecture-cards">
+        <div class="pac-card">
+          <div class="pac-step">01</div>
+          <h4>Passive when Correct</h4>
+          <p>If an incoming news article is accurately classified beyond the margin threshold (hinge loss = 0), the model weights remain untouched, preserving training stability.</p>
+        </div>
+        <div class="pac-card">
+          <div class="pac-step">02</div>
+          <h4>Aggressive when Mistaken</h4>
+          <p>If an article is misclassified, the algorithm executes an aggressive update with minimal perturbation, adapting to evolving disinformation terminology in real-time.</p>
+        </div>
+        <div class="pac-card">
+          <div class="pac-step">03</div>
+          <h4>Production Serialization</h4>
+          <p>The vectorizer and model weights are packaged as <code>vector.pkl</code> and <code>model.pkl</code> for ultra-low latency microsecond inference in Flask.</p>
+        </div>
+      </div>
+
+      <div class="cta-banner">
+        <div class="cta-text">
+          <h3>Test the Detector in Real Time</h3>
+          <p>Paste any news title, author, or body paragraph to classify its credibility and calculate social media visibility impact.</p>
+        </div>
+        <a href="/predict" class="btn btn-primary btn-lg">Open Prediction Studio →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <p>© 2026 FAKEBUSTER · Developed by <strong>Bibhore Raj</strong> · B.Tech CSE (AI &amp; ML)</p>
+      <p class="footer-sub">“Bust the Fake. Find the Facts.” · Engineered with Python, Scikit-Learn, Flask, and Passive Aggressive Classification.</p>
+    </div>
+  </footer>
+</body>
+</html>

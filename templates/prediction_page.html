@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prediction Studio — FAKEBUSTER Fake News Detection System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="nav-container">
+      <a href="/" class="brand-logo">
+        <span class="brand-shield">🛡️</span>
+        <span class="brand-text">Fake<span class="brand-accent">Buster</span></span>
+      </a>
+      <nav class="nav-links">
+        <a href="/">Overview</a>
+        <a href="/predict" class="active-link">Prediction Studio</a>
+        <a href="/batch">Batch Explorer</a>
+        <a href="/sources">Source Registry</a>
+        <a href="/docs">API Docs</a>
+        <span class="badge-tag">PAC Engine: 96% Acc</span>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Prediction Studio Layout -->
+  <main class="studio-main">
+    <div class="studio-container">
+      <div class="studio-header">
+        <span class="section-badge">Interactive Inference Studio</span>
+        <h1 class="studio-title">Analyze Article &amp; Source Credibility</h1>
+        <p class="studio-subtext"><strong>“Bust the Fake. Find the Facts.”</strong> — Submit article content below or choose a sample to test the Passive Aggressive Classifier in real-time.</p>
+      </div>
+
+      <!-- Quick Preset Samples -->
+      <div class="sample-preset-row">
+        <span class="preset-label">Quick Samples:</span>
+        <button type="button" class="preset-btn" onclick="loadSample('nasa')">🚀 Real: NASA Discovery</button>
+        <button type="button" class="preset-btn" onclick="loadSample('miracle')">⚠️ Fake: Secret Miracle Herb</button>
+        <button type="button" class="preset-btn" onclick="loadSample('alien')">🛸 Fake: Hollow Moon Outpost</button>
+      </div>
+
+      <div class="studio-grid">
+        <!-- Form Column -->
+        <div class="studio-card input-card">
+          <form action="/predict" method="POST" id="newsForm">
+            <div class="form-group">
+              <label for="title">Article Headline / Title</label>
+              <input type="text" id="title" name="title" placeholder="e.g. NASA Telescope Reveals Distant Galaxies..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="author">Author or News Publisher / Source</label>
+              <input type="text" id="author" name="author" placeholder="e.g. Nature Science Journal or Reuters...">
+            </div>
+
+            <div class="form-group">
+              <label for="text">Article Content / Body</label>
+              <textarea id="text" name="text" rows="7" placeholder="Paste the news story text here..." required></textarea>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary btn-block">
+                <span>Analyze with Passive Aggressive Classifier</span>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Result Column -->
+        <div class="studio-card result-card">
+          <div class="result-header">
+            <h3>Model Classification Verdict</h3>
+            <span class="model-badge">PAC Online Model</span>
+          </div>
+
+          {% if result %}
+            <div class="verdict-box {% if result.is_fake %}fake-verdict{% else %}real-verdict{% endif %}">
+              <div class="verdict-icon">
+                {% if result.is_fake %}🚨{% else %}✅{% endif %}
+              </div>
+              <div class="verdict-info">
+                <span class="verdict-tag">{% if result.is_fake %}UNRELIABLE / FAKE{% else %}RELIABLE / AUTHENTIC{% endif %}</span>
+                <h4 class="verdict-title">{{ result.prediction }}</h4>
+                <p class="verdict-source">Source Analyzed: <strong>{{ result.author }}</strong></p>
+              </div>
+            </div>
+
+            <!-- Confidence Bar -->
+            <div class="metric-meter-wrap">
+              <div class="meter-labels">
+                <span>Model Confidence</span>
+                <span class="meter-val">{{ result.confidence }}%</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-fill {% if result.is_fake %}fill-fake{% else %}fill-real{% endif %}" style="width: {{ result.confidence }}%"></div>
+              </div>
+            </div>
+
+            <!-- Source Visibility Weight -->
+            <div class="visibility-score-box">
+              <div class="vis-header">
+                <span class="vis-label">Social Media Visibility Weight</span>
+                <span class="vis-multiplier">{{ result.visibility_weight }}x</span>
+              </div>
+              <p class="vis-explanation">
+                {% if result.is_fake %}
+                  ⚠️ <strong>Feed Demotion Active:</strong> High probability of misinformation detected. Recommendation: Dampen source algorithm weight by {{ ((1.0 - result.visibility_weight) * 100)|round }}% in social distribution feeds.
+                {% else %}
+                  🌟 <strong>Standard / High Visibility:</strong> Content aligns with verified, reputable reporting patterns. No throttling applied.
+                {% endif %}
+              </p>
+            </div>
+
+          {% else %}
+            <!-- Default Placeholder State -->
+            <div class="empty-state">
+              <div class="empty-icon">📊</div>
+              <h4>No Article Analyzed Yet</h4>
+              <p>Type in an article title and content on the left, or click one of the quick samples above to inspect the PAC classification results.</p>
+              
+              <div class="benchmark-pills">
+                <span class="pill">Benchmark: 96% Acc</span>
+                <span class="pill">Loss: Hinge</span>
+                <span class="pill">C: 0.5</span>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const samples = {
+      nasa: {
+        title: "NASA James Webb Space Telescope Reveals Ancient Galaxies Formed After Big Bang",
+        author: "Dr. Sarah Jenkins, Astrophysical Journal",
+        text: "Astronomers using the James Webb Space Telescope have discovered an unprecedented cluster of massive galaxies dating back to within 400 million years of the Big Bang. These observations challenge existing cosmological models of early universe structure formation and provide pristine spectroscopic confirmation of rapid stellar accretion."
+      },
+      miracle: {
+        title: "SHOCKING: Secret Miracle Herb Cures All Diseases Overnight Suppressed by Big Pharma",
+        author: "NaturalHealthTruths",
+        text: "A secret ancient root found in the remote mountains has been clinically proven to cure diabetes, cancer, and heart diseases in less than 24 hours. However, multinational pharmaceutical conglomerates and corrupt federal officials are violently suppressing this information to protect their trillion-dollar profits. Order your starter kit today before government agents seize this site!"
+      },
+      alien: {
+        title: "Leaked Government Documents Prove Moon Is Hollow Alien Surveillance Outpost",
+        author: "CosmicFreedomPatriot",
+        text: "Uncensored classified military memos obtained by anonymous whistleblower hacktivists confirm that Apollo astronauts encountered extraterrestrial reconnaissance stations inside the moon's hollow core. Seismic resonance data recorded during lunar landings allegedly confirms metallic resonance signatures."
+      }
+    };
+
+    function loadSample(key) {
+      const s = samples[key];
+      if (!s) return;
+      document.getElementById('title').value = s.title;
+      document.getElementById('author').value = s.author;
+      document.getElementById('text').value = s.text;
+    }
+  </script>
+</body>
+</html>
